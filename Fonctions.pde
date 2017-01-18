@@ -1,8 +1,8 @@
 
-// Fonction \u00e0 l'appui d'une touche
+// Fonction à l'appui d'une touche
 public void keyPressed() {
   if (key == CODED) {
-    // Fonctions de d\u00e9placement du joueur
+    // Fonctions de déplacement du joueur
     player.move(keyCode);
     if (keyCode == CONTROL) {
       afficherTableau(matrice, nbCase * nbCase);
@@ -23,25 +23,25 @@ public void mouseReleased() {
   moving = false;
 }
 
-// Fonction qui fait passer le jeu au niveau sup\u00e9rieur
+// Fonction qui fait passer le jeu au niveau supérieur
 public void levelUp() {
-  timer = millis() - start; //On r\u00e9cup\u00e8re le temps du joueur \u00e0 ce niveau
+  timer = millis() - start; //On récupère le temps du joueur à ce niveau
   int sec = timer / 1000;
   int ms = timer % 1000;
-  if (sec > 60) { // S'il a fait plus d'une minute, on a un affichage diff\u00e9rent
+  if (sec > 60) { // S'il a fait plus d'une minute, on a un affichage différent
     int min = sec / 60;
     sec = sec % 60;
-    println("Vous avez pass\u00e9 le niveau " + (niveau) + " en " + min + " minute(s) et " + sec + "," + ms + " seconde(s).");
+    println("Vous avez passé le niveau " + (niveau) + " en " + min + " minute(s) et " + sec + "," + ms + " seconde(s).");
   } else {
-    println("Bravo, vous avez pass\u00e9 le niveau " + (niveau) + " en " + sec + "," + ms + " seconde(s).");
+    println("Bravo, vous avez passé le niveau " + (niveau) + " en " + sec + "," + ms + " seconde(s).");
   }
   niveau++; //La fonction ne s'appelle pas level Up pour rien !
   
   //Le nombre de case augmente d'un
   nbCase++;
   
-  // Cr\u00e9ation d'un nouveau Labyrtinthe
-  newLabyrinthe();
+  // Création d'un nouveau Labyrtinthe
+  labyrinthe = new Labyrinthe();
   
   // Repositionnement du joueur et des IAs
   player.repositionne(0, 0);
@@ -50,7 +50,7 @@ public void levelUp() {
     aiPlayer.randomPosition();
   }
   
-  // Cr\u00e9ation d'une nouvelle IA au niveau 4 puis au 6 puis au 8 et \u00e0 tous les niveaux
+  // Création d'une nouvelle IA au niveau 4 puis au 6 puis au 8 et à tous les niveaux
   if (niveau % 4 == 0) {
     if (ai) aiplayers.add(new AIPlayer());
   }
@@ -58,25 +58,25 @@ public void levelUp() {
   start = millis();
 }
 
-// Fonction appel\u00e9 si le joueur se fait touch\u00e9 par l'une des IAs
+// Fonction appel\u00e9 si le joueur se fait touché par l'une des IAs
 public void gameOver() {
-  timer = millis() - start; //On r\u00e9cup\u00e8re le temps du joueur
+  timer = millis() - start; //On récupère le temps du joueur
   int sec = timer / 1000;
   int ms = timer % 1000;
-  if (sec > 60) { // S'il a fait plus d'une minute, on a un affichage diff\u00e9rent
+  if (sec > 60) { // S'il a fait plus d'une minute, on a un affichage différent
     int min = sec / 60;
     sec = sec % 60;
-    println("Oups ! Vous vous \u00eates fait mang\u00e9 par une IA au bout de " + min + " minute(s) et " + sec + "," + ms + " seconde(s).");
+    println("Oups ! Vous vous êeates fait mangé par une IA au bout de " + min + " minute(s) et " + sec + "," + ms + " seconde(s).");
   } else {
-    println("Aie ! Vous vous \u00eates fait mang\u00e9 par une IA au bout de " + sec + "," + ms + " seconde(s).");
+    println("Aie ! Vous vous êtes fait mangé par une IA au bout de " + sec + "," + ms + " seconde(s).");
   }
   
-  //Le nombre de case revient \u00e0 2 et le niveau est \u00e0 1
+  //Le nombre de case revient à 2 et le niveau est à 1
   nbCase = 2;
   niveau = 1;
   
-  // Cr\u00e9ation d'un nouveau Labyrtinthe
-  newLabyrinthe();
+  // Création d'un nouveau Labyrtinthe
+  labyrinthe = new Labyrinthe();
   
   // Repositionnement du joueur et des IAs
   player.repositionne(0, 0);
@@ -84,14 +84,16 @@ public void gameOver() {
   //On vide la liste des IAs
   aiplayers.clear();
   
-  //On red\u00e9marre le compteur
+  //On redémarre le compteur
   start = millis();
 }
 
-public void newLabyrinthe() {
-  walls.clear();
-  matrice = new int[nbCase*nbCase][nbCase*nbCase];
-  grille = new int[nbCase][nbCase];
-  creuse_passage(0, 0);
-  drawMaze();
+//Affiche les valeurs contenus dans un tableau à 2 dimensions
+void afficherTableau(int[][] array, int size) {
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      print(array[i][j] + " | ");
+    }
+    println();
+  }
 }

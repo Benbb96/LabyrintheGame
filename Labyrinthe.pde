@@ -1,14 +1,21 @@
 
 class Labyrinthe {
   
-  
+  ArrayList<Wall> walls = new ArrayList(); //Liste des murs du labyrinthe
   
   Labyrinthe() {
-    
+    matrice = new int[nbCase*nbCase][nbCase*nbCase];
+    grille = new int[nbCase][nbCase];
+    creuse_passage(0, 0);
+    buildMaze();
   }
   
   void display() {
-    
+    //Affichage des murs
+    for (int i = 0; i < walls.size(); i++) {
+      Wall wall = walls.get(i);
+      wall.display();
+    }
   }
   
   //Fonction récursive qui permet de creuser le labyrinthe
@@ -90,7 +97,7 @@ class Labyrinthe {
   }
   
   //Fonction qui construit le labyrinthe en créant des murs en bas et à droite de chaque case s'il y en besoin
-  void drawMaze() {
+  void buildMaze() {
     int ax,ay,bx,by; //Case A et B adjacente
     //Parcours de toutes les cases du labyrinthe
     for (int i = 0; i < nbCase; i++) {

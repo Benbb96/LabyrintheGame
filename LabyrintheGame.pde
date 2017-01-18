@@ -28,17 +28,16 @@ Player player;
 int niveau = 1;
 
 ArrayList<AIPlayer> aiplayers = new ArrayList(); //liste des IAs
-boolean ai = false; //Permet d'activer ou de désactiver les IAs
+boolean ai = true; //Permet d'activer ou de désactiver les IAs
 
 int nbCase = 2; //Nombre de case
 float tailleX; //Taille largeur en pixel d'une case
 float tailleY; //Taille hauteur en pixel d'une case
 int start, timer; //Timer pour chronométré le joueur
 
+Labyrinthe labyrinthe; //Le labyrinthe du jeu
 int[][] matrice; //Matrice d'adjacence du jeu pour savoir si on a le droit de se déplacer sur une case ou non
 int[][] grille; //Grille qui va nous servir pour la construction du labyrinthe
-
-ArrayList<Wall> walls = new ArrayList();
 
 boolean overPlayer = false; //Pour savoir si la souris est au-dessus du joueur
 boolean moving = false; //Lorsque le joueur est est en déplacement
@@ -57,7 +56,7 @@ void setup() {
   tailleY = height/nbCase;
   
   // Création du Labyrtinthe
-  newLabyrinthe();
+  labyrinthe = new Labyrinthe();
   
   // Création du joueur
   player = new Player();
@@ -103,9 +102,5 @@ void afficheTerrain() {
   fill(0);
   text(niveau, tailleX/3, tailleY - tailleY/3);
   
-  //Affichage des murs
-  for (int i = 0; i < walls.size(); i++) {
-    Wall wall = walls.get(i);
-    wall.display();
-  }
+  labyrinthe.display();
 }
