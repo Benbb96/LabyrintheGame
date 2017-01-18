@@ -53,12 +53,14 @@ class Player {
   
   //Affiche le joueur
   void display() {
+    pushStyle();
     if (moving) fill(230,230,70);
     else fill(couleur);
-    if (overPlayer) strokeWeight(4);
-    else strokeWeight(2);
+    if (overPlayer) strokeWeight((width+height)/(nbCase*40));
+    else strokeWeight((width+height)/(nbCase*40));
     stroke(0);
     ellipse(location.x, location.y, sizeX, sizeY);
+    popStyle();
   }
   
   // Vérifie si le joueur a atteint le point d'arrivée
@@ -89,10 +91,12 @@ class Player {
         else canGoThere = false;
         break;
     }
-    /*
-    if (canGoThere) //Jouer un son quand le joueur se déplace
-    else //Jouer un son quand le joueur rentre dans un mur
-    */
+    
+    if (canGoThere) { //Jouer un son quand le joueur se déplace
+      grille[int(posOnGrid.y)][int(posOnGrid.x)] = 1;
+    }
+    //else //Jouer un son quand le joueur rentre dans un mur
+    
   }
   
   //Repositionne le joueur à l'endroit souhaité

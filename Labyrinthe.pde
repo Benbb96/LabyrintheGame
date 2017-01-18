@@ -4,9 +4,13 @@ class Labyrinthe {
   ArrayList<Wall> walls = new ArrayList(); //Liste des murs du labyrinthe
   
   Labyrinthe() {
+    // Réinitialise les tableaux à 2 dimensions
     matrice = new int[nbCase*nbCase][nbCase*nbCase];
     grille = new int[nbCase][nbCase];
+    // Génère la matrice d'adjacence et construit les murs du labyrinthe
     creuse_passage(0, 0);
+    grille = new int[nbCase][nbCase];
+    
     buildMaze();
   }
   
@@ -15,6 +19,18 @@ class Labyrinthe {
     for (int i = 0; i < walls.size(); i++) {
       Wall wall = walls.get(i);
       wall.display();
+    }
+    //Affichage des points de déplacements
+    for (int i = 0; i < nbCase; i++) {
+      for (int j = 0; j < nbCase; j++) {
+        if (grille[j][i] == 1) {
+          pushStyle();
+          fill(0,0,255);
+          noStroke();
+          ellipse(i * tailleX + tailleX/2, j * tailleY + tailleY/2, tailleX/4, tailleY/4);
+          popStyle();
+        }
+      }
     }
   }
   

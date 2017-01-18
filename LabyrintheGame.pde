@@ -8,7 +8,7 @@ Player player;
 int niveau = 1;
 
 ArrayList<AIPlayer> aiplayers = new ArrayList(); //liste des IAs
-boolean ai = false; //Permet d'activer ou de désactiver les IAs
+boolean ai = true; //Permet d'activer ou de désactiver les IAs
 
 int nbCase = 2; //Nombre de case
 float tailleX; //Taille largeur en pixel d'une case
@@ -45,7 +45,7 @@ void setup() {
   music = new SoundFile(this, "music.mp3");
   music.play();
   music.stop();
-  //music.loop();
+  music.loop();
   musicIsPlaying = true;
   
   start = millis();

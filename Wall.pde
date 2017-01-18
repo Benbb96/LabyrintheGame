@@ -12,7 +12,7 @@ class Wall {
   
   void display() {
     stroke(0);
-    strokeWeight(3);
+    strokeWeight((width+height)/(nbCase*40));
     line(a.x * tailleX, a.y * tailleY, b.x * tailleX, b.y * tailleY);
   }
   

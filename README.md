@@ -1,11 +1,11 @@
-# LabyrintheGame
+# Labyrinthe Game
 
-*Jeu de labyrinthe généré aléatoirement avec __Processing__, crée et développé par Benjamin Bernard-Bouissières*
+*Jeu de labyrinthe généré aléatoirement avec __Processing__, créé et développé par Benjamin Bernard-Bouissières*
 
 ## Présentation du jeu
 
-Le but du jeu est évidemment de traverser des labyrinthes qui sont générés aléatoirement grâce à un algorithme appelé le __Recursive Backtracker__ (voir sur [http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking](http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking))  
-Le jeu commence au niveau 1 sur la case verte d'un labyrinthe de 2 par 2. A chaque fois que le joueur atteint la case rouge, un nouveau labyrinthe apparaît mais cette fois de dimension 3 par 3 et ainsi de suite de manière infini.  
+Le but du jeu est évidemment de traverser des labyrinthes qui sont générés de façon aléatoire grâce à un algorithme appelé le __Recursive Backtracker__ (voir sur [http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking](http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking))  
+Le jeu commence au niveau 1 sur la case verte d'un labyrinthe de 2 par 2. A chaque fois que le joueur parvient à atteindre la case rouge, un nouveau labyrinthe apparaît mais cette fois de dimension 3 par 3 et ainsi de suite de manière infini.  
 Le joueur est chronométré à chaque nouveau labyrtinthe.  
 Une __intelligence artificielle__, représenté par des pions rouges, rajoute une difficulté supplémentaire en essayant d'attraper le joueur en le faisant recommencer du début.  
 J'ai également crée une petite musique de fond qui se répète en boucle (cela peut devenir assez lassant au bout d'un moment ^^').  
@@ -21,4 +21,4 @@ L'IA pourrait faire un déplacement à chaque fois que le joueur se déplace (Po
 * Création d'un menu de jeu
 * Gestion des meilleurs scores dans un fichier
 * Ajout de différents sons
-* Etendre le labyrinthe de part et d'autre au lieu d'en générer un nouveau
+* Etendre le labyrinthe de part et d'autre au lieu d'en générer un nouveau -> pas super car on repasse toujours par le même chemin

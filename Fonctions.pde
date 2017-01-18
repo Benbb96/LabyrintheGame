@@ -5,8 +5,8 @@ public void keyPressed() {
     // Fonctions de déplacement du joueur
     player.move(keyCode);
     if (keyCode == CONTROL) {
-      afficherTableau(matrice, nbCase * nbCase);
-      //afficherTableau(grille, nbCase);
+      //afficherTableau(matrice, nbCase * nbCase);
+      afficherTableau(grille, nbCase);
     }
   }
 }
@@ -58,7 +58,7 @@ public void levelUp() {
   start = millis();
 }
 
-// Fonction appel\u00e9 si le joueur se fait touché par l'une des IAs
+// Fonction appelée si le joueur se fait touché par l'une des IAs
 public void gameOver() {
   timer = millis() - start; //On récupère le temps du joueur
   int sec = timer / 1000;
