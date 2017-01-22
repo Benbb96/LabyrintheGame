@@ -1,4 +1,4 @@
-# Labyrinthe Game
+﻿# Labyrinthe Game
 
 *Jeu de labyrinthe généré aléatoirement avec __Processing__, créé et développé par Benjamin Bernard-Bouissières*
 
@@ -12,13 +12,13 @@ J'ai également crée une petite musique de fond qui se répète en boucle (cela
 
 ## Axes d'améliorations
 
-* Tracer le chemin qu'emprunte le joueur
+* Tracer le chemin qu'emprunte le joueur -> Fait (améliorer ?)
 * Mettre un fond ? Animation construction du labyrinthe
 * Amélioration de l'IA -> Algorithme de Disjktra -> déplacement à un point random pour une impression de cohérence dans les mouvements.  
 L'IA pourrait faire un déplacement à chaque fois que le joueur se déplace (Pokemon Donjon Mystère)
 * Cases Abri pour se protéger des IA (dans les coins ?)
 * Ajout d'objets à collecter (Pouvoirs, score, ...)
 * Création d'un menu de jeu
-* Gestion des meilleurs scores dans un fichier
+* Gestion des meilleurs scores dans un fichier -> Fait (à utiliser dans les futurs menus)
 * Ajout de différents sons
 * Etendre le labyrinthe de part et d'autre au lieu d'en générer un nouveau -> pas super car on repasse toujours par le même chemin

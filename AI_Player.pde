@@ -36,6 +36,11 @@ class AIPlayer extends Player {
     ellipse(location.x, location.y, sizeX, sizeY);
   }
   
+  //Remet à jour la position réelle de l'IA en pixel à partir de sa position dans la grille de jeu
+  void updateLocation() {
+    location = new PVector(posOnGrid.x * tailleX + sizeX, posOnGrid.y * tailleY + sizeY);
+  }
+  
   void think() {
     switch(directions.get(0)) {
       case UP :

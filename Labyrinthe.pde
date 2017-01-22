@@ -9,11 +9,11 @@ class Labyrinthe {
     grille = new int[nbCase][nbCase];
     // Génère la matrice d'adjacence et construit les murs du labyrinthe
     creuse_passage(0, 0);
-    grille = new int[nbCase][nbCase];
-    
+    grille = new int[nbCase][nbCase]; //On remet à 0 la grille pour renseigner ensuite par où est passer le joueur
     buildMaze();
   }
   
+  // Affichage du labyrinthe en général
   void display() {
     //Affichage des murs
     for (int i = 0; i < walls.size(); i++) {
@@ -23,11 +23,11 @@ class Labyrinthe {
     //Affichage des points de déplacements
     for (int i = 0; i < nbCase; i++) {
       for (int j = 0; j < nbCase; j++) {
-        if (grille[j][i] == 1) {
+        if (grille[j][i] != 0) {
           pushStyle();
-          fill(0,0,255);
+          fill(grille[j][i]%255,grille[j][i]%255,255);
           noStroke();
-          ellipse(i * tailleX + tailleX/2, j * tailleY + tailleY/2, tailleX/4, tailleY/4);
+          ellipse(i * tailleX + tailleX/2, j * tailleY + tailleY/2, tailleX/10, tailleY/10);
           popStyle();
         }
       }

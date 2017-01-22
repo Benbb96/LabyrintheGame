@@ -1,0 +1,183 @@
+[
+  [],
+  [
+    {
+      "level": 1,
+      "name": "BBB",
+      "rang": 2,
+      "temps": 766
+    },
+    {
+      "level": 1,
+      "name": "BBB",
+      "rang": 3,
+      "temps": 868
+    },
+    {
+      "level": 1,
+      "name": "BBB",
+      "rang": 4,
+      "temps": 900
+    },
+    {
+      "level": 1,
+      "name": "BBB",
+      "rang": 5,
+      "temps": 1000
+    },
+    {
+      "level": 1,
+      "name": "BBB",
+      "rang": 6,
+      "temps": 1471
+    },
+    {
+      "level": 1,
+      "name": "BBB",
+      "rang": 7,
+      "temps": 2095
+    },
+    {
+      "level": 1,
+      "name": "BBB",
+      "rang": 8,
+      "temps": 2217
+    }
+  ],
+  [
+    {
+      "level": 2,
+      "name": "BBB",
+      "rang": 1,
+      "temps": 865
+    },
+    {
+      "level": 2,
+      "name": "BBB",
+      "rang": 2,
+      "temps": 866
+    },
+    {
+      "level": 2,
+      "name": "BBB",
+      "rang": 3,
+      "temps": 1032
+    },
+    {
+      "level": 2,
+      "name": "BBB",
+      "rang": 4,
+      "temps": 1037
+    },
+    {
+      "level": 2,
+      "name": "BBB",
+      "rang": 5,
+      "temps": 1381
+    },
+    {
+      "level": 2,
+      "name": "BBB",
+      "rang": 6,
+      "temps": 1389
+    },
+    {
+      "level": 2,
+      "name": "BBB",
+      "rang": 7,
+      "temps": 1555
+    },
+    {
+      "level": 2,
+      "name": "BBB",
+      "rang": 8,
+      "temps": 1602
+    }
+  ],
+  [
+    {
+      "level": 3,
+      "name": "BBB",
+      "rang": 1,
+      "temps": 1299
+    },
+    {
+      "level": 3,
+      "name": "BBB",
+      "rang": 2,
+      "temps": 1533
+    },
+    {
+      "level": 3,
+      "name": "BBB",
+      "rang": 3,
+      "temps": 1549
+    },
+    {
+      "level": 3,
+      "name": "BBB",
+      "rang": 4,
+      "temps": 1696
+    },
+    {
+      "level": 3,
+      "name": "BBB",
+      "rang": 5,
+      "temps": 1698
+    },
+    {
+      "level": 3,
+      "name": "BBB",
+      "rang": 6,
+      "temps": 1817
+    },
+    {
+      "level": 3,
+      "name": "BBB",
+      "rang": 7,
+      "temps": 1915
+    },
+    {
+      "level": 3,
+      "name": "BBB",
+      "rang": 8,
+      "temps": 2167
+    }
+  ],
+  [{
+    "level": 4,
+    "name": "BBB",
+    "rang": 1,
+    "temps": 1663
+  }],
+  [{
+    "level": 5,
+    "name": "BBB",
+    "rang": 1,
+    "temps": 3582
+  }],
+  [{
+    "level": 6,
+    "name": "BBB",
+    "rang": 1,
+    "temps": 13989
+  }],
+  [{
+    "level": 7,
+    "name": "BBB",
+    "rang": 1,
+    "temps": 5266
+  }],
+  [{
+    "level": 8,
+    "name": "BBB",
+    "rang": 1,
+    "temps": 6549
+  }],
+  [{
+    "level": 9,
+    "name": "BBB",
+    "rang": 1,
+    "temps": 6300
+  }]
+]

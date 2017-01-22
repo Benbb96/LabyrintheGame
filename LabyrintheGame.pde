@@ -5,6 +5,7 @@ import processing.sound.*;
 
 // Instanciation des variables globales
 Player player;
+String name = "BBB"; //Le nom du joueur
 int niveau = 1;
 
 ArrayList<AIPlayer> aiplayers = new ArrayList(); //liste des IAs
@@ -25,7 +26,12 @@ boolean moving = false; //Lorsque le joueur est est en déplacement
 SoundFile music; //Musique de fond
 boolean musicIsPlaying = false; //Permet de savoir si la musique est en train d'être joué ou non
 
+JSONArray scores;
+
 void setup() {
+  //Récupération des scores
+  scores = loadJSONArray("scores.json");
+  
   // Mise en place du terrain jeu
   size(400,400);
   surface.setResizable(true);
@@ -45,7 +51,7 @@ void setup() {
   music = new SoundFile(this, "music.mp3");
   music.play();
   music.stop();
-  music.loop();
+  //music.loop();
   musicIsPlaying = true;
   
   start = millis();

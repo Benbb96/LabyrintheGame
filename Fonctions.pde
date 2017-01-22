@@ -1,6 +1,16 @@
 
 // Fonction à l'appui d'une touche
 public void keyPressed() {
+  if (key == 'e') {
+    if (ai) {
+      ai = false;
+      aiplayers.add(new AIPlayer());
+    }
+    else {
+      ai = true;
+      aiplayers.clear();
+    }
+  }
   if (key == CODED) {
     // Fonctions de déplacement du joueur
     player.move(keyCode);
@@ -35,6 +45,11 @@ public void levelUp() {
   } else {
     println("Bravo, vous avez passé le niveau " + (niveau) + " en " + sec + "," + ms + " seconde(s).");
   }
+  
+  // Crée le score du joueur et l'ajoute
+  Score score = new Score(niveau,timer,name);
+  saveJSONArray(scores, "data/scores.json");
+  
   niveau++; //La fonction ne s'appelle pas level Up pour rien !
   
   //Le nombre de case augmente d'un
@@ -66,7 +81,7 @@ public void gameOver() {
   if (sec > 60) { // S'il a fait plus d'une minute, on a un affichage différent
     int min = sec / 60;
     sec = sec % 60;
-    println("Oups ! Vous vous êeates fait mangé par une IA au bout de " + min + " minute(s) et " + sec + "," + ms + " seconde(s).");
+    println("Oups ! Vous vous êtes fait mangé par une IA au bout de " + min + " minute(s) et " + sec + "," + ms + " seconde(s).");
   } else {
     println("Aie ! Vous vous êtes fait mangé par une IA au bout de " + sec + "," + ms + " seconde(s).");
   }

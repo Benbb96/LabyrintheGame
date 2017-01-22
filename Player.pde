@@ -93,7 +93,7 @@ class Player {
     }
     
     if (canGoThere) { //Jouer un son quand le joueur se déplace
-      grille[int(posOnGrid.y)][int(posOnGrid.x)] = 1;
+      grille[int(posOnGrid.y)][int(posOnGrid.x)]++;
     }
     //else //Jouer un son quand le joueur rentre dans un mur
     
