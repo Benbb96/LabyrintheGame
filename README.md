@@ -22,3 +22,4 @@ L'IA pourrait faire un déplacement à chaque fois que le joueur se déplace (Po
 * Gestion des meilleurs scores dans un fichier -> Fait (à utiliser dans les futurs menus)
 * Ajout de différents sons
 * Etendre le labyrinthe de part et d'autre au lieu d'en générer un nouveau -> pas super car on repasse toujours par le même chemin
+* Faire disparaître les murs au bou d'un certain temps. Le joueur doit donc mémoriser l'emplacement des murs. Une touche spéciale pourrait permettre de revoir les murs pendant un court instant
