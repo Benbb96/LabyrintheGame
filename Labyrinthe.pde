@@ -21,16 +21,25 @@ class Labyrinthe {
       wall.display();
     }
     //Affichage des points de déplacements
-    for (int i = 0; i < nbCase; i++) {
-      for (int j = 0; j < nbCase; j++) {
-        if (grille[j][i] != 0) {
-          pushStyle();
-          fill(grille[j][i]%255,grille[j][i]%255,255);
-          noStroke();
-          ellipse(i * tailleX + tailleX/2, j * tailleY + tailleY/2, tailleX/10, tailleY/10);
-          popStyle();
+    if (point) {
+      for (int i = 0; i < nbCase; i++) {
+        for (int j = 0; j < nbCase; j++) {
+          if (grille[j][i] != 0) {
+            pushStyle();
+            fill(grille[j][i]%255,grille[j][i]%255,255);
+            noStroke();
+            ellipse(i * tailleX + tailleX/2, j * tailleY + tailleY/2, tailleX/10, tailleY/10);
+            popStyle();
+          }
         }
       }
+    }
+  }
+  
+  void resetAlpha() {
+    for (int i = 0; i < walls.size(); i++) {
+      Wall wall = walls.get(i);
+      wall.alpha = 255;
     }
   }
   

@@ -1,17 +1,39 @@
 
 // Fonction à l'appui d'une touche
 public void keyPressed() {
+  // Activation/Désactivation des ennemis
   if (key == 'e') {
-    if (ai) {
-      ai = false;
-      aiplayers.add(new AIPlayer());
-    }
-    else {
-      ai = true;
-      aiplayers.clear();
+    if (ai) ai = false;
+    else ai = true;
+  }
+  // Ajouter des ennemis
+  else if (key == '+') {
+    aiplayers.add(new AIPlayer());
+  }
+  // Retirer des ennemis
+  else if (key == '-') {
+    if (aiplayers.size() > 0) aiplayers.remove(aiplayers.size() - 1);
+  }
+  // Faire réapparaître les murs
+  else if (key == 'a') {
+    labyrinthe.resetAlpha();
+  }
+  // Faire apparaître/Disparaître les points tracés par le joueur
+  else if (key == 'p') {
+    if (point) point = false;
+    else point = true;
+  }
+  // Gérer la musique
+  else if (key == 'm') {
+    if (musicIsPlaying) {
+      music.stop();
+      musicIsPlaying = false;
+    } else {
+      music.loop();
+      musicIsPlaying = true;
     }
   }
-  if (key == CODED) {
+  else if (key == CODED) {
     // Fonctions de déplacement du joueur
     player.move(keyCode);
     if (keyCode == CONTROL) {
@@ -67,7 +89,7 @@ public void levelUp() {
   
   // Création d'une nouvelle IA au niveau 4 puis au 6 puis au 8 et à tous les niveaux
   if (niveau % 4 == 0) {
-    if (ai) aiplayers.add(new AIPlayer());
+    aiplayers.add(new AIPlayer());
   }
   
   start = millis();

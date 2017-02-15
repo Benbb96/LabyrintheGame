@@ -9,7 +9,7 @@ String name = "BBB"; //Le nom du joueur
 int niveau = 1;
 
 ArrayList<AIPlayer> aiplayers = new ArrayList(); //liste des IAs
-boolean ai = true; //Permet d'activer ou de désactiver les IAs
+boolean ai = false; //Permet d'activer ou de désactiver les IAs
 
 int nbCase = 2; //Nombre de case
 float tailleX; //Taille largeur en pixel d'une case
@@ -22,9 +22,10 @@ int[][] grille; //Grille qui va nous servir pour la construction du labyrinthe
 
 boolean overPlayer = false; //Pour savoir si la souris est au-dessus du joueur
 boolean moving = false; //Lorsque le joueur est est en déplacement
+boolean point = true; //Affichage des points de marquage du chemin du joueur
 
 SoundFile music; //Musique de fond
-boolean musicIsPlaying = false; //Permet de savoir si la musique est en train d'être joué ou non
+boolean musicIsPlaying = true; //Permet de savoir si la musique est en train d'être joué ou non
 
 JSONArray scores;
 
@@ -33,7 +34,7 @@ void setup() {
   scores = loadJSONArray("scores.json");
   
   // Mise en place du terrain jeu
-  size(400,400);
+  size(444,444);
   surface.setResizable(true);
   background(255);
   
@@ -49,10 +50,9 @@ void setup() {
   
   // Load a soundfile from the /data folder of the sketch and play it back
   music = new SoundFile(this, "music.mp3");
-  music.play();
-  music.stop();
-  //music.loop();
-  musicIsPlaying = true;
+  if (musicIsPlaying) {
+    music.loop();
+  }
   
   start = millis();
 }
@@ -68,10 +68,12 @@ void draw() {
   // Mise à jour du joueur
   player.update(); //Met à jour la position du joueur
   
-  //Mise à jour des IAs
-  for (int i = 0; i < aiplayers.size(); i++) {
-    AIPlayer aiPlayer = aiplayers.get(i);
-    aiPlayer.update();
+  if (ai) {
+    //Mise à jour des IAs
+    for (int i = 0; i < aiplayers.size(); i++) {
+      AIPlayer aiPlayer = aiplayers.get(i);
+      aiPlayer.update();
+    }
   }
 }
 
