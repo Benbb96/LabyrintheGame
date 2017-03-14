@@ -73,6 +73,7 @@ class Player {
   // Fonction de déplacement qui vérifie si le déplacement peut se faire (limites du terrain et les murs)
   void move(int direction) {
     boolean canGoThere = true;
+    PVector oldPosOnGrid = new PVector(posOnGrid.x, posOnGrid.y);
     switch(direction) {
       case UP :
         if (posOnGrid.y > 0 && matrice[posOnMatrice()][(int)posOnGrid.x * nbCase + (int)posOnGrid.y-1] == 1) posOnGrid.y--;
@@ -92,10 +93,12 @@ class Player {
         break;
     }
     
-    if (canGoThere) { //Jouer un son quand le joueur se déplace
-      grille[int(posOnGrid.y)][int(posOnGrid.x)]++;
+    if (canGoThere) {
+      if (grille[int(posOnGrid.y)][int(posOnGrid.x)] == 0) {
+        grille[int(posOnGrid.y)][int(posOnGrid.x)] = 1;
+        labyrinthe.chemins.add(new Chemin(oldPosOnGrid, new PVector(posOnGrid.x, posOnGrid.y)));
+      }
     }
-    //else //Jouer un son quand le joueur rentre dans un mur
     
   }
   

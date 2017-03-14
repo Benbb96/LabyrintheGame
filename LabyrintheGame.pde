@@ -22,7 +22,7 @@ boolean moving = false; //Lorsque le joueur est est en déplacement
 boolean point = false; //Affichage des points de marquage du chemin du joueur
 
 void setup() {
-  // Mise en place duterrain jeu
+  // Mise en place du terrain de jeu
   size(444,444);
   surface.setResizable(true);
   background(255);
