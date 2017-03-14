@@ -1,3 +1,4 @@
+// La classe du Labyrinthe
 
 class Labyrinthe {
   
