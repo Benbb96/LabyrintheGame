@@ -8,7 +8,6 @@
 Player player;
 int niveau = 1;
 
-
 int nbCase = 3; //Nombre de case
 float tailleX; //Taille largeur en pixel d'une case
 float tailleY; //Taille hauteur en pixel d'une case
@@ -16,10 +15,6 @@ float tailleY; //Taille hauteur en pixel d'une case
 Labyrinthe labyrinthe; //Le labyrinthe du jeu
 int[][] matrice; //Matrice d'adjacence du jeu pour savoir si on a le droit de se déplacer sur une case ou non
 int[][] grille; //Grille qui va nous servir pour la construction du labyrinthe
-
-boolean overPlayer = false; //Pour savoir si la souris est au-dessus du joueur
-boolean moving = false; //Lorsque le joueur est est en déplacement
-boolean point = false; //Affichage des points de marquage du chemin du joueur
 
 void setup() {
   // Mise en place du terrain de jeu
@@ -46,6 +41,12 @@ void draw() {
   //Fonction d'affichage du terrain de jeu
   afficheTerrain();
   
+  //Déplacement du joueur via les touches du clavier
+  if (keyPressed && key == CODED) {
+    player.move(keyCode);
+    delay(44);
+  }
+  
   // Mise à jour du joueur
   player.update(); //Met à jour la position du joueur
 }
@@ -57,11 +58,19 @@ void afficheTerrain() {
   fill(color(0, 255, 0));
   rect(0, 0, tailleX, tailleY);
   fill(color(255, 0, 0));
-  rect(width - tailleX, height - tailleY, tailleX, tailleY);
+  rect(tailleX * (nbCase-1), tailleY * (nbCase-1), tailleX, tailleY);
   textSize(tailleY / 2);
   // Information sur la case départ du niveau du labyrinthe
   fill(0);
   text(niveau, tailleX/3, tailleY - tailleY/3);
+  
+  // Carré du terrain de jeu
+  strokeWeight((width+height)/(nbCase*40));
+  stroke(0);
+  line(0, 0, tailleX * nbCase, 0);
+  line(0, 0, 0,  tailleY * nbCase);
+  line(tailleX * nbCase, 0, tailleX * nbCase, tailleY * nbCase-1);
+  line(0, tailleY * nbCase, tailleX * nbCase, tailleY * nbCase);
 
   //Affichage du labyrinthe
   labyrinthe.display();
@@ -69,34 +78,33 @@ void afficheTerrain() {
 
 // Fonction à l'appui d'une touche
 void keyPressed() {
-  if (key == CODED) {
-    // Fonctions de déplacement du joueur
-    player.move(keyCode);
-  } else if (key == 'r') {
+  if (key == 'r') {
     gameOver();
   } else if (key == 'l') {
     levelUp();
   }
   else if (key == 'p') {
-    if (point) point = false;
-    else point = true;
+    player.point = player.point ? false : true;
+  }
+  else if (key == 'c') {
+    player.chemin = player.chemin ? false : true;
   }
   else if (key == 'a') {
-    point = false;
+    player.point = false;
     labyrinthe.resetAlpha();
+  }
+  else if (key == 'd') {
+    labyrinthe.disappear = labyrinthe.disappear ? false : true;
   }
 }
 
 // Fonction au clic de souris
 public void mousePressed() {
-  if(overPlayer) {
-    moving = true;
+  if(!player.isMoving && player.overPlayer) {
+    player.isMoving = true;
+  } else {
+    player.isMoving = false;
   }
-}
-
-// Fonction au relachement du clic
-public void mouseReleased() {
-  moving = false;
 }
 
 // Fonction qui fait passer le jeu au niveau supérieur
@@ -107,6 +115,7 @@ public void levelUp() {
   // Création d'un nouveau Labyrtinthe
   labyrinthe = new Labyrinthe();
   player.repositionne(0, 0);
+  player.isMoving = false;
 }
 
 // Fonction appelée si le joueur se fait touché par l'une des IAs
@@ -117,4 +126,5 @@ public void gameOver() {
   // Création d'un nouveau Labyrtinthe et repositionnement du joueur
   labyrinthe = new Labyrinthe();
   player.repositionne(0, 0);
+  player.isMoving = false;
 }

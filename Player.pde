@@ -7,6 +7,11 @@ class Player {
   float sizeX; //La taille largeur du joueur
   float sizeY; //La taille hauteur du joueur
   
+  boolean overPlayer = false; //Pour savoir si la souris est au-dessus du joueur
+  boolean isMoving = false; //Lorsque le joueur est est en déplacement
+  boolean point = false; //Affichage des points de marquage du chemin du joueur
+  boolean chemin = true; //Affichage des chemins empruntés par le joueur
+  
   color couleur = color(255,255,0); //La couleur du joueur, par défaut jaune
   
   Player () {
@@ -24,7 +29,7 @@ class Player {
   
   //Remet à jour la position réelle du joueur en pixel à partir de sa position dans la grille de jeu
   void updateLocation() {
-    if (moving) {
+    if (isMoving) {
       tryMoving();
     }
     location = new PVector(posOnGrid.x * tailleX + sizeX, posOnGrid.y * tailleY + sizeY);
@@ -54,10 +59,10 @@ class Player {
   //Affiche le joueur
   void display() {
     pushStyle();
-    if (moving) fill(230,230,70);
+    if (isMoving) fill(230,150,70);
     else fill(couleur);
-    if (overPlayer) strokeWeight((width+height)/(nbCase*40));
-    else strokeWeight((width+height)/(nbCase*40));
+    if (overPlayer && !isMoving) strokeWeight((width+height)/(nbCase*40));
+    else strokeWeight((width+height)/(nbCase*60));
     stroke(0);
     ellipse(location.x, location.y, sizeX, sizeY);
     popStyle();

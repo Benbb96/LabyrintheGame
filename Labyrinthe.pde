@@ -5,6 +5,8 @@ class Labyrinthe {
   ArrayList<Wall> walls = new ArrayList(); //Liste des murs du labyrinthe
   ArrayList<Chemin> chemins = new ArrayList(); //Liste des chemins
   
+  boolean disappear = false; //Permet de choisir si les murs du labyrinthe disparaissent ou non
+  
   Labyrinthe() {
     // Réinitialise les tableaux à 2 dimensions
     matrice = new int[nbCase*nbCase][nbCase*nbCase];
@@ -24,13 +26,15 @@ class Labyrinthe {
     }
     
     //Affichage des chemins empruntés par le joueur
-    for (int i = 0; i < chemins.size(); i++) {
-      Chemin chemin = chemins.get(i);
-      chemin.display();
+    if (player.chemin) {
+      for (int i = 0; i < chemins.size(); i++) {
+        Chemin chemin = chemins.get(i);
+        chemin.display();
+      }
     }
     
     //Affichage des points de déplacements
-    /*if (point) {
+    if (player.point) {
       for (int i = 0; i < nbCase; i++) {
         for (int j = 0; j < nbCase; j++) {
           if (grille[j][i] != 0) {
@@ -42,7 +46,7 @@ class Labyrinthe {
           }
         }
       }
-    }*/
+    }
   }
   
   void resetAlpha() {

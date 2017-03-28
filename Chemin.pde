@@ -13,7 +13,6 @@ class Chemin {
   void display() {
     // Calcul de la diminution de l'alpha (peut-être à adpater)
     alpha -= 1.2 / (nbCase / 2);
-    if (alpha <= 0) point = true;
     stroke(color(68, 44, 200), alpha);
     strokeWeight((width+height)/(nbCase*80));
     /*

@@ -13,8 +13,7 @@ class Wall {
   
   void display() {
     // Calcul de la diminution de l'alpha (peut-être à adpater)
-    alpha -= 1.2 / (nbCase / 2);
-    if (alpha <= 0) point = true;
+    if (labyrinthe.disappear) alpha -= 1.2 / (nbCase / 2);
     stroke(0, alpha);
     strokeWeight((width+height)/(nbCase*40));
     line(a.x * tailleX, a.y * tailleY, b.x * tailleX, b.y * tailleY);
