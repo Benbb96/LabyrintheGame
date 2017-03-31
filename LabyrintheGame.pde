@@ -16,11 +16,13 @@ Labyrinthe labyrinthe; //Le labyrinthe du jeu
 int[][] matrice; //Matrice d'adjacence du jeu pour savoir si on a le droit de se déplacer sur une case ou non
 int[][] grille; //Grille qui va nous servir pour la construction du labyrinthe
 
+color backgroundColor = color(255, 255, 255);
+
 void setup() {
   // Mise en place du terrain de jeu
   size(444,444);
   surface.setResizable(true);
-  background(255);
+  background(backgroundColor);
   
   // Calcul de la taille d'une case
   tailleX = width/nbCase;
@@ -38,42 +40,20 @@ void draw() {
   tailleX = width/nbCase;
   tailleY = height/nbCase;
   
-  //Fonction d'affichage du terrain de jeu
-  afficheTerrain();
+  //Raffraichissement de la couleur de fond
+  background(backgroundColor);
+  
+  //Affichage du labyrinthe
+  labyrinthe.display();
   
   //Déplacement du joueur via les touches du clavier
   if (keyPressed && key == CODED) {
     player.move(keyCode);
-    delay(44);
+    delay(20);
   }
   
   // Mise à jour du joueur
   player.update(); //Met à jour la position du joueur
-}
-
-void afficheTerrain() {
-  background(255);
-  //Cases Départ Vert et Arrivée Rouge
-  noStroke();
-  fill(color(0, 255, 0));
-  rect(0, 0, tailleX, tailleY);
-  fill(color(255, 0, 0));
-  rect(tailleX * (nbCase-1), tailleY * (nbCase-1), tailleX, tailleY);
-  textSize(tailleY / 2);
-  // Information sur la case départ du niveau du labyrinthe
-  fill(0);
-  text(niveau, tailleX/3, tailleY - tailleY/3);
-  
-  // Carré du terrain de jeu
-  strokeWeight((width+height)/(nbCase*40));
-  stroke(0);
-  line(0, 0, tailleX * nbCase, 0);
-  line(0, 0, 0,  tailleY * nbCase);
-  line(tailleX * nbCase, 0, tailleX * nbCase, tailleY * nbCase-1);
-  line(0, tailleY * nbCase, tailleX * nbCase, tailleY * nbCase);
-
-  //Affichage du labyrinthe
-  labyrinthe.display();
 }
 
 // Fonction à l'appui d'une touche
@@ -90,7 +70,6 @@ void keyPressed() {
     player.chemin = player.chemin ? false : true;
   }
   else if (key == 'a') {
-    player.point = false;
     labyrinthe.resetAlpha();
   }
   else if (key == 'd') {

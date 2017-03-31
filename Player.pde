@@ -9,7 +9,7 @@ class Player {
   
   boolean overPlayer = false; //Pour savoir si la souris est au-dessus du joueur
   boolean isMoving = false; //Lorsque le joueur est est en déplacement
-  boolean point = false; //Affichage des points de marquage du chemin du joueur
+  boolean point = true; //Affichage des points de marquage du chemin du joueur
   boolean chemin = true; //Affichage des chemins empruntés par le joueur
   
   color couleur = color(255,255,0); //La couleur du joueur, par défaut jaune

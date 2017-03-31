@@ -19,11 +19,26 @@ class Labyrinthe {
   
   // Affichage du labyrinthe en général
   void display() {
-    //Affichage des murs
-    for (int i = 0; i < walls.size(); i++) {
-      Wall wall = walls.get(i);
-      wall.display();
+    
+    fill(color(0,0,255));
+    noStroke();
+    //Affichage des points/carrés de déplacements
+    if (player.point) {
+      for (int i = 0; i < nbCase; i++) {
+        for (int j = 0; j < nbCase; j++) {
+          if (grille[j][i] != 0) {
+            //ellipse(i * tailleX + tailleX/2, j * tailleY + tailleY/2, tailleX/10, tailleY/10);
+            rect(i * tailleX, j * tailleY, tailleX, tailleY);
+          }
+        }
+      }
     }
+    
+    //Cases Départ Vert et Arrivée Rouge
+    fill(color(0, 255, 0));
+    rect(0, 0, tailleX, tailleY);
+    fill(color(255, 0, 0));
+    rect(tailleX * (nbCase-1), tailleY * (nbCase-1), tailleX, tailleY);
     
     //Affichage des chemins empruntés par le joueur
     if (player.chemin) {
@@ -33,20 +48,24 @@ class Labyrinthe {
       }
     }
     
-    //Affichage des points de déplacements
-    if (player.point) {
-      for (int i = 0; i < nbCase; i++) {
-        for (int j = 0; j < nbCase; j++) {
-          if (grille[j][i] != 0) {
-            pushStyle();
-            fill(grille[j][i]%255,grille[j][i]%255,255);
-            noStroke();
-            ellipse(i * tailleX + tailleX/2, j * tailleY + tailleY/2, tailleX/10, tailleY/10);
-            popStyle();
-          }
-        }
-      }
-    }
+    // Information sur la case départ du niveau du labyrinthe
+    fill(0);
+    textSize(tailleY / 2);
+    text(niveau, tailleX/3, tailleY - tailleY/3);
+    
+    //Affichage des murs
+    for (int i = 0; i < walls.size(); i++) {
+      Wall wall = walls.get(i);
+      wall.display();
+    }    
+    
+    // Contour du terrain de jeu
+    strokeWeight((width+height)/(nbCase*40));
+    stroke(0);
+    line(0, 0, tailleX * nbCase, 0);
+    line(0, 0, 0,  tailleY * nbCase);
+    line(tailleX * nbCase, 0, tailleX * nbCase, tailleY * nbCase-1);
+    line(0, tailleY * nbCase, tailleX * nbCase, tailleY * nbCase);
   }
   
   void resetAlpha() {
