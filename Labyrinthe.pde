@@ -5,7 +5,7 @@ class Labyrinthe {
   ArrayList<Wall> walls = new ArrayList(); //Liste des murs du labyrinthe
   ArrayList<Chemin> chemins = new ArrayList(); //Liste des chemins
   
-  boolean disappear = false; //Permet de choisir si les murs du labyrinthe disparaissent ou non
+  boolean disappear = true; //Permet de choisir si les murs du labyrinthe disparaissent ou non
   
   Labyrinthe() {
     // Réinitialise les tableaux à 2 dimensions
