@@ -20,6 +20,9 @@ class Labyrinthe {
     //endCase = new PVector(nbCase-1, nbCase-1);
     startCase =  new PVector((int)random(nbCase),(int)random(nbCase));
     endCase =  new PVector((int)random(nbCase),(int)random(nbCase));
+    while (endCase.x == startCase.x && endCase.y == startCase.y) {
+      endCase =  new PVector((int)random(nbCase),(int)random(nbCase));
+    }
     buildMaze();
   }
   

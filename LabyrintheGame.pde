@@ -84,6 +84,8 @@ public void levelUp() {
   niveau++; //La fonction ne s'appelle pas level Up pour rien !
   //Le nombre de case augmente d'un
   nbCase += 3;
+  // Resize la fenêtre correctement
+  surface.setSize((width/nbCase + 1) * nbCase, (height/nbCase + 1) * nbCase);
   // Création d'un nouveau Labyrtinthe
   labyrinthe = new Labyrinthe();
   player.repositionne(labyrinthe.startCase.x, labyrinthe.startCase.y);
@@ -95,6 +97,7 @@ public void gameOver() {
   //Le nombre de case revient à 2 et le niveau est à 1
   nbCase = 3;
   niveau = 1;
+  surface.setSize(444, 444);
   // Création d'un nouveau Labyrtinthe et repositionnement du joueur
   labyrinthe = new Labyrinthe();
   player.repositionne(labyrinthe.startCase.x, labyrinthe.startCase.y);
