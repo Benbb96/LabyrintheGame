@@ -7,6 +7,8 @@ class Labyrinthe {
   
   boolean disappear = false; //Permet de choisir si les murs du labyrinthe disparaissent ou non
   
+  PVector startCase, endCase;
+  
   Labyrinthe() {
     // Réinitialise les tableaux à 2 dimensions
     matrice = new int[nbCase*nbCase][nbCase*nbCase];
@@ -14,6 +16,10 @@ class Labyrinthe {
     // Génère la matrice d'adjacence et construit les murs du labyrinthe
     creuse_passage(0, 0);
     grille = new int[nbCase][nbCase]; //On remet à 0 la grille pour renseigner ensuite par où est passer le joueur
+    //startCase = new PVector(0, 0);
+    //endCase = new PVector(nbCase-1, nbCase-1);
+    startCase =  new PVector((int)random(nbCase),(int)random(nbCase));
+    endCase =  new PVector((int)random(nbCase),(int)random(nbCase));
     buildMaze();
   }
   
@@ -36,9 +42,9 @@ class Labyrinthe {
     
     //Cases Départ Vert et Arrivée Rouge
     fill(color(0, 255, 0));
-    rect(0, 0, tailleX, tailleY);
+    rect(tailleX * startCase.x + tailleX/7, tailleY * startCase.y + tailleY/7, tailleX*5 /7, tailleY*5 /7);
     fill(color(255, 0, 0));
-    rect(tailleX * (nbCase-1), tailleY * (nbCase-1), tailleX, tailleY);
+    rect(tailleX * endCase.x + tailleX/7, tailleY * endCase.y + tailleY/7, tailleX*5 /7, tailleY*5 /7);
     
     //Affichage des chemins empruntés par le joueur
     if (player.chemin) {
@@ -49,7 +55,7 @@ class Labyrinthe {
     }
     
     // Information sur la case départ du niveau du labyrinthe
-    fill(0);
+    fill(wallColor);
     textSize(tailleY / 2);
     text(niveau, tailleX/3, tailleY - tailleY/3);
     
@@ -61,7 +67,7 @@ class Labyrinthe {
     
     // Contour du terrain de jeu
     strokeWeight((width+height)/(nbCase*40));
-    stroke(0);
+    stroke(wallColor);
     line(0, 0, tailleX * nbCase, 0);
     line(0, 0, 0,  tailleY * nbCase);
     line(tailleX * nbCase, 0, tailleX * nbCase, tailleY * nbCase-1);
@@ -176,6 +182,13 @@ class Labyrinthe {
           walls.add(new Wall(bx, by, ax, ay));
         }
       }
+    }
+  }
+  
+  // Vérifie si le joueur a atteint le point d'arrivée
+  void checkFinish() {
+    if (player.posOnGrid.x == endCase.x && player.posOnGrid.y == endCase.y) {
+      levelUp();
     }
   }
   

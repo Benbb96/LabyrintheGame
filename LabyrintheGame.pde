@@ -16,7 +16,8 @@ Labyrinthe labyrinthe; //Le labyrinthe du jeu
 int[][] matrice; //Matrice d'adjacence du jeu pour savoir si on a le droit de se déplacer sur une case ou non
 int[][] grille; //Grille qui va nous servir pour la construction du labyrinthe
 
-color backgroundColor = color(255, 255, 255);
+color backgroundColor = color(0, 0, 0);
+color wallColor = color(255, 255, 255);
 
 void setup() {
   // Mise en place du terrain de jeu
@@ -49,7 +50,7 @@ void draw() {
   //Déplacement du joueur via les touches du clavier
   if (keyPressed && key == CODED) {
     player.move(keyCode);
-    delay(20);
+    delay(44);
   }
   
   // Mise à jour du joueur
@@ -58,22 +59,14 @@ void draw() {
 
 // Fonction à l'appui d'une touche
 void keyPressed() {
-  if (key == 'r') {
-    gameOver();
-  } else if (key == 'l') {
-    levelUp();
-  }
-  else if (key == 'p') {
-    player.point = player.point ? false : true;
-  }
-  else if (key == 'c') {
-    player.chemin = player.chemin ? false : true;
-  }
-  else if (key == 'a') {
-    labyrinthe.resetAlpha();
-  }
-  else if (key == 'd') {
-    labyrinthe.disappear = labyrinthe.disappear ? false : true;
+  switch(key) {
+    case 'r' : gameOver(); break;
+    case 'l' : levelUp(); break;
+    case 'p' : player.point = player.point ? false : true; break;
+    case 'c' : player.chemin = player.chemin ? false : true; break;
+    case 'a' : labyrinthe.resetAlpha(); break;
+    case 'd' : labyrinthe.disappear = labyrinthe.disappear ? false : true; break;
+    case 'w' : println(player.posOnMatrice());
   }
 }
 
@@ -93,7 +86,7 @@ public void levelUp() {
   nbCase += 3;
   // Création d'un nouveau Labyrtinthe
   labyrinthe = new Labyrinthe();
-  player.repositionne(0, 0);
+  player.repositionne(labyrinthe.startCase.x, labyrinthe.startCase.y);
   player.isMoving = false;
 }
 
@@ -104,6 +97,6 @@ public void gameOver() {
   niveau = 1;
   // Création d'un nouveau Labyrtinthe et repositionnement du joueur
   labyrinthe = new Labyrinthe();
-  player.repositionne(0, 0);
+  player.repositionne(labyrinthe.startCase.x, labyrinthe.startCase.y);
   player.isMoving = false;
 }

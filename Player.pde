@@ -9,7 +9,7 @@ class Player {
   
   boolean overPlayer = false; //Pour savoir si la souris est au-dessus du joueur
   boolean isMoving = false; //Lorsque le joueur est est en déplacement
-  boolean point = true; //Affichage des points de marquage du chemin du joueur
+  boolean point = false; //Affichage des points de marquage du chemin du joueur
   boolean chemin = true; //Affichage des chemins empruntés par le joueur
   
   color couleur = color(255,255,0); //La couleur du joueur, par défaut jaune
@@ -19,9 +19,8 @@ class Player {
     sizeX = tailleX/2;
     sizeY = tailleY/2;
     
-    //Le joueur commence sur la première case en haut à gauche (0,0)
-    posOnGrid = new PVector(0,0);
-    //posOnGrid = new PVector((int)random(nbCase),(int)random(nbCase)); //Random
+    //Le joueur commence sur la première case en général en haut à gauche (0,0)
+    posOnGrid = new PVector(labyrinthe.startCase.x,labyrinthe.startCase.y);
     
     //On met à jour sa position réel
     updateLocation();
@@ -53,7 +52,7 @@ class Player {
     updateLocation();
     display();
     //Vérification si le joueur est sur la dernière case
-    checkFinish();
+    labyrinthe.checkFinish();
   }
   
   //Affiche le joueur
@@ -66,13 +65,6 @@ class Player {
     stroke(0);
     ellipse(location.x, location.y, sizeX, sizeY);
     popStyle();
-  }
-  
-  // Vérifie si le joueur a atteint le point d'arrivée
-  void checkFinish() {
-    if (posOnGrid.x == nbCase-1 && posOnGrid.y == nbCase-1) {
-      levelUp();
-    }
   }
   
   // Fonction de déplacement qui vérifie si le déplacement peut se faire (limites du terrain et les murs)
@@ -108,7 +100,7 @@ class Player {
   }
   
   //Repositionne le joueur à l'endroit souhaité
-  void repositionne(int x, int y) {
+  void repositionne(float x, float y) {
     posOnGrid.x = x;
     posOnGrid.y = y;
   }
