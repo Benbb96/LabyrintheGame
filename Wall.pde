@@ -2,9 +2,9 @@
 
 class Wall {
   
-  PVector a; //Point A du mur (en haut à gauche)
-  PVector b; //Point B du mur (en bas à droite)
-  float alpha = 255.0;
+  PVector a;  // Point A du mur (en haut à gauche)
+  PVector b;  // Point B du mur (en bas à droite)
+  float alpha = 255.0;  // Transparence du mur
   
   Wall(float ax, float ay, float bx, float by) {
     a = new PVector(ax, ay);

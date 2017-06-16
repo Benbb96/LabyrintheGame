@@ -8,13 +8,13 @@
 Player player;
 int niveau = 1;
 
-int nbCase = 3; //Nombre de case
-float tailleX; //Taille largeur en pixel d'une case
-float tailleY; //Taille hauteur en pixel d'une case
+int nbCase = 3;  // Nombre de case
+float tailleX;  // Taille largeur en pixel d'une case
+float tailleY;  // Taille hauteur en pixel d'une case
 
-Labyrinthe labyrinthe; //Le labyrinthe du jeu
-int[][] matrice; //Matrice d'adjacence du jeu pour savoir si on a le droit de se déplacer sur une case ou non
-int[][] grille; //Grille qui va nous servir pour la construction du labyrinthe
+Labyrinthe labyrinthe;  // Le labyrinthe du jeu
+int[][] matrice;  // Matrice d'adjacence du jeu pour savoir si on a le droit de se déplacer sur une case ou non
+int[][] grille;  // Grille qui va nous servir pour la construction du labyrinthe
 
 color backgroundColor = color(0, 0, 0);
 color wallColor = color(255, 255, 255);
@@ -41,26 +41,26 @@ void draw() {
   tailleX = width/nbCase;
   tailleY = height/nbCase;
   
-  //Raffraichissement de la couleur de fond
+  // Raffraichissement de la couleur de fond
   background(backgroundColor);
   
-  //Affichage du labyrinthe
+  // Affichage du labyrinthe
   labyrinthe.display();
   
-  //Déplacement du joueur via les touches du clavier
+  // Déplacement du joueur via les touches du clavier
   if (keyPressed && key == CODED) {
     player.move(keyCode);
     delay(44);
   }
   
   // Mise à jour du joueur
-  player.update(); //Met à jour la position du joueur
+  player.update();  //Met à jour la position du joueur
 }
 
 // Fonction à l'appui d'une touche
 void keyPressed() {
   switch(key) {
-    case 'r' : gameOver(); break;
+    case 'r' : gameOver(); break;  // RESET
     case 'l' : levelUp(); break;
     case 'p' : player.point = player.point ? false : true; break;
     case 'c' : player.chemin = player.chemin ? false : true; break;
@@ -81,8 +81,8 @@ public void mousePressed() {
 
 // Fonction qui fait passer le jeu au niveau supérieur
 public void levelUp() {  
-  niveau++; //La fonction ne s'appelle pas level Up pour rien !
-  //Le nombre de case augmente d'un
+  niveau++;  //La fonction ne s'appelle pas level Up pour rien !
+  // Le nombre de case augmente d'un
   nbCase += 3;
   // Resize la fenêtre correctement
   surface.setSize((width/nbCase + 1) * nbCase, (height/nbCase + 1) * nbCase);
@@ -92,9 +92,9 @@ public void levelUp() {
   player.isMoving = false;
 }
 
-// Fonction appelée si le joueur se fait touché par l'une des IAs
+// Fonction appelée si le joueur se fait touché par l'une des IAs ou que le jeu est reset
 public void gameOver() {
-  //Le nombre de case revient à 2 et le niveau est à 1
+  // Le nombre de case revient à 3 et le niveau est à 1
   nbCase = 3;
   niveau = 1;
   surface.setSize(444, 444);
