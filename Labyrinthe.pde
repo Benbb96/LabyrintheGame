@@ -191,7 +191,7 @@ class Labyrinthe {
   // Vérifie si le joueur a atteint le point d'arrivée
   void checkFinish() {
     if (player.posOnGrid.x == endCase.x && player.posOnGrid.y == endCase.y) {
-      levelUp();
+      mode = LEVEL_UP;
     }
   }
   

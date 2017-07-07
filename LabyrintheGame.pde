@@ -1,7 +1,7 @@
 // Générateur de Labyrinthe
 // Jeu crée et développé par Benjamin Bernard-Bouissières
 
-// Le but du jeu est évidemment de traversé des labyrinthes qui sont génénés aléatoirement grâce
+// Le but du jeu est évidemment de traverser des labyrinthes qui sont génénés aléatoirement grâce
 // à un algorithme appelé le Recursive Backtracker (voir sur http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking)
 
 // Instanciation des variables globales
@@ -18,6 +18,12 @@ int[][] grille;  // Grille qui va nous servir pour la construction du labyrinthe
 
 color backgroundColor = color(0, 0, 0);
 color wallColor = color(255, 255, 255);
+
+int mode = 1;
+final int MENU = 1;
+final int NORMAL_MODE = 4;
+final int LEVEL_UP = 10;
+final int GAME_OVER = 13;
 
 void setup() {
   // Mise en place du terrain de jeu
@@ -41,32 +47,74 @@ void draw() {
   tailleX = width/nbCase;
   tailleY = height/nbCase;
   
-  // Raffraichissement de la couleur de fond
-  background(backgroundColor);
-  
-  // Affichage du labyrinthe
-  labyrinthe.display();
-  
-  // Déplacement du joueur via les touches du clavier
-  if (keyPressed && key == CODED) {
-    player.move(keyCode);
-    delay(44);
+  //Dans quelle mode sommes-nous ?
+  switch (mode) {
+    case MENU :
+      // Affichage du menu
+      background(backgroundColor);
+      fill(wallColor);
+      textSize(width/20);
+      text("The Labyrinthe Game", width/3,height/3);
+      break;
+      
+    case NORMAL_MODE :
+      // Raffraichissement de la couleur de fond
+      background(backgroundColor);
+      // Affichage du labyrinthe
+      labyrinthe.display();
+      
+      // Déplacement du joueur via les touches du clavier
+      if (keyPressed && key == CODED) {
+        player.move(keyCode);
+        delay(44);
+      }
+      
+      // Mise à jour du joueur
+      player.update();  //Met à jour la position du joueur
+      break;
+      
+    case LEVEL_UP :
+      background(backgroundColor);
+      labyrinthe.display();
+      player.update();
+      popUp("Bravo !\nAppuiez sur Entrer pour continuer");
+      break;
+      
+    case GAME_OVER :
+      background(backgroundColor);
+      labyrinthe.display();
+      player.update();
+      popUp("Game Over !\nAppuiez sur Entrée pour revenir au menu");
+      break;
+      
+    default : background(255,0,0);
   }
-  
-  // Mise à jour du joueur
-  player.update();  //Met à jour la position du joueur
 }
 
 // Fonction à l'appui d'une touche
 void keyPressed() {
+  println(keyCode);
   switch(key) {
-    case 'r' : gameOver(); break;  // RESET
+    case 'r' : mode = GAME_OVER; break;  // RESET
     case 'l' : levelUp(); break;
     case 'p' : player.point = player.point ? false : true; break;
     case 'c' : player.chemin = player.chemin ? false : true; break;
     case 'a' : labyrinthe.resetAlpha(); break;
     case 'd' : labyrinthe.disappear = labyrinthe.disappear ? false : true; break;
-    case 'w' : println(player.posOnMatrice());
+    case 'w' : println(player.posOnMatrice()); break;
+    case ENTER :
+      switch(mode) {
+        case MENU :
+          mode = NORMAL_MODE; //Entrer pour commencer le mode normal
+          break;
+        case LEVEL_UP :
+          levelUp();
+          break;
+        case GAME_OVER :
+          gameOver();
+          break;
+      }
+      break;
   }
 }
 
@@ -90,6 +138,8 @@ public void levelUp() {
   labyrinthe = new Labyrinthe();
   player.repositionne(labyrinthe.startCase.x, labyrinthe.startCase.y);
   player.isMoving = false;
+  
+  mode = NORMAL_MODE;
 }
 
 // Fonction appelée si le joueur se fait touché par l'une des IAs ou que le jeu est reset
@@ -102,4 +152,19 @@ public void gameOver() {
   labyrinthe = new Labyrinthe();
   player.repositionne(labyrinthe.startCase.x, labyrinthe.startCase.y);
   player.isMoving = false;
+  
+  mode = MENU;
+}
+
+public void popUp(String mess) {
+  pushStyle();
+  fill(255,255,255,200);
+  stroke(0);
+  strokeWeight(3);
+  rect(width/5, height/5, (width*3)/5, (height*3)/5);
+  fill(0);
+  textSize(width/30);
+  textAlign(CENTER, CENTER);
+  text(mess, width/2, height/2);
+  popStyle();
 }
