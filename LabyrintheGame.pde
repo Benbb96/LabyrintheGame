@@ -93,28 +93,23 @@ void draw() {
 
 // Fonction à l'appui d'une touche
 void keyPressed() {
-  println(keyCode);
-  switch(key) {
-    case 'r' : mode = GAME_OVER; break;  // RESET
-    case 'l' : levelUp(); break;
-    case 'p' : player.point = player.point ? false : true; break;
-    case 'c' : player.chemin = player.chemin ? false : true; break;
-    case 'a' : labyrinthe.resetAlpha(); break;
-    case 'd' : labyrinthe.disappear = labyrinthe.disappear ? false : true; break;
-    case 'w' : println(player.posOnMatrice()); break;
-    case ENTER :
-      switch(mode) {
-        case MENU :
-          mode = NORMAL_MODE; //Entrer pour commencer le mode normal
-          break;
-        case LEVEL_UP :
-          levelUp();
-          break;
-        case GAME_OVER :
-          gameOver();
-          break;
-      }
-      break;
+  // Cela dépend du mode de jeu dans lequel on est 
+  if (mode == NORMAL_MODE) {
+    switch(key) {
+      case 'r' : mode = GAME_OVER; break;  // RESET
+      case 'l' : levelUp(); break;
+      case 'p' : player.point = player.point ? false : true; break;
+      case 'c' : player.chemin = player.chemin ? false : true; break;
+      case 'a' : labyrinthe.resetAlpha(); break;
+      case 'd' : labyrinthe.disappear = labyrinthe.disappear ? false : true; break;
+      case 'w' : println(player.posOnMatrice()); break;
+    }
+  } else if (mode == MENU && key == ENTER) {
+    mode = NORMAL_MODE;
+  }  else if (mode == LEVEL_UP && key == ENTER) {
+    levelUp();
+  } else if (mode == GAME_OVER && key == ENTER) {
+    gameOver();
   }
 }
 
@@ -156,7 +151,8 @@ public void gameOver() {
   mode = MENU;
 }
 
-public void popUp(String mess) {
+// Fonction permettant l'affichage d'une pop-up un peu transparente avec un message
+public void popUp(String message) {
   pushStyle();
   fill(255,255,255,200);
   stroke(0);
@@ -165,6 +161,6 @@ public void popUp(String mess) {
   fill(0);
   textSize(width/30);
   textAlign(CENTER, CENTER);
-  text(mess, width/2, height/2);
+  text(message, width/2, height/2);
   popStyle();
 }
