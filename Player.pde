@@ -1,33 +1,32 @@
-//La classe du Joueur
+// La classe du Joueur
 
 class Player {
  
-  PVector location; //La position réel sur l'écran (en pixel)
-  PVector posOnGrid; //La position du joueur sur la grille
-  float sizeX; //La taille largeur du joueur
-  float sizeY; //La taille hauteur du joueur
+  PVector location;  // La position réel sur l'écran (en pixel)
+  PVector posOnGrid;  // La position du joueur sur la grille
+  float sizeX;  // La taille largeur du joueur
+  float sizeY;  // La taille hauteur du joueur
   
-  boolean overPlayer = false; //Pour savoir si la souris est au-dessus du joueur
-  boolean isMoving = false; //Lorsque le joueur est est en déplacement
-  boolean point = false; //Affichage des points de marquage du chemin du joueur
-  boolean chemin = true; //Affichage des chemins empruntés par le joueur
+  boolean overPlayer = false;  // Pour savoir si la souris est au-dessus du joueur
+  boolean isMoving = false;  // Lorsque le joueur est est en déplacement
+  boolean point = false;  // Affichage des points de marquage du chemin du joueur
+  boolean chemin = true;  // Affichage des chemins empruntés par le joueur
   
-  color couleur = color(255,255,0); //La couleur du joueur, par défaut jaune
+  color couleur = color(255,255,0);  // La couleur du joueur, par défaut jaune
   
   Player () {
-    //Calcul de la taille du joueur
+    // Calcul de la taille du joueur
     sizeX = tailleX/2;
     sizeY = tailleY/2;
     
-    //Le joueur commence sur la première case en haut à gauche (0,0)
-    posOnGrid = new PVector(0,0);
-    //posOnGrid = new PVector((int)random(nbCase),(int)random(nbCase)); //Random
+    // Le joueur commence sur la première case en général en haut à gauche (0,0)
+    posOnGrid = new PVector(labyrinthe.startCase.x,labyrinthe.startCase.y);
     
-    //On met à jour sa position réel
+    // On met à jour sa position réel
     updateLocation();
   }
   
-  //Remet à jour la position réelle du joueur en pixel à partir de sa position dans la grille de jeu
+  // Remet à jour la position réelle du joueur en pixel à partir de sa position dans la grille de jeu
   void updateLocation() {
     if (isMoving) {
       tryMoving();
@@ -37,7 +36,7 @@ class Player {
   
   // Fonction d'actualisation du joueur, sa taille, sa position et s'il a atteint son but
   void update() {
-    //Remise à jour de la taille du joueur
+    // Remise à jour de la taille du joueur
     sizeX = tailleX/2;
     sizeY = tailleY/2;
     
@@ -52,11 +51,11 @@ class Player {
     // Mise à jour de sa position à partir de la position sur la grille de jeu et affichage
     updateLocation();
     display();
-    //Vérification si le joueur est sur la dernière case
-    checkFinish();
+    // Vérification si le joueur est sur la dernière case
+    labyrinthe.checkFinish();
   }
   
-  //Affiche le joueur
+  // Affiche le joueur
   void display() {
     pushStyle();
     if (isMoving) fill(230,150,70);
@@ -66,13 +65,6 @@ class Player {
     stroke(0);
     ellipse(location.x, location.y, sizeX, sizeY);
     popStyle();
-  }
-  
-  // Vérifie si le joueur a atteint le point d'arrivée
-  void checkFinish() {
-    if (posOnGrid.x == nbCase-1 && posOnGrid.y == nbCase-1) {
-      levelUp();
-    }
   }
   
   // Fonction de déplacement qui vérifie si le déplacement peut se faire (limites du terrain et les murs)
@@ -107,8 +99,8 @@ class Player {
     
   }
   
-  //Repositionne le joueur à l'endroit souhaité
-  void repositionne(int x, int y) {
+  // Repositionne le joueur à l'endroit souhaité
+  void repositionne(float x, float y) {
     posOnGrid.x = x;
     posOnGrid.y = y;
   }
@@ -119,23 +111,23 @@ class Player {
     return (int)posOnGrid.x * nbCase + (int)posOnGrid.y;
   }
   
-  //Essaye de faire bouger le joueur à l'aide de la souris
+  // Essaye de faire bouger le joueur à l'aide de la souris
   void tryMoving() {
-    //Récupère les coordonnées de la position de la souris
+    // Récupère les coordonnées de la position de la souris
     int x = floor(mouseX/tailleX);
     int y = floor(mouseY/tailleY);
     
-    //Appelle la fonction de déplacement dans la direction où se trouve la souris par rapport au joueur
+    // Appelle la fonction de déplacement dans la direction où se trouve la souris par rapport au joueur
     move(getDirection(x, y));
   }
   
-  //Retourne la direction à une case d'écart par rapport à la position donné en paramètre et la position du joueur
+  // Retourne la direction à une case d'écart par rapport à la position donné en paramètre et la position du joueur
   int getDirection(int x, int y) {
-    //Calcul d'où souhaite-t-on se rendre
+    // Calcul d'où souhaite-t-on se rendre
     int targetX = int(x - posOnGrid.x);
     int targetY = int(y - posOnGrid.y);
     
-    //Retourne la direction en fonction
+    // Retourne la direction en fonction
     if(targetX == 1) return RIGHT;
     if(targetX == -1) return LEFT;
     if(targetY == 1) return DOWN;

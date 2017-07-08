@@ -1,8 +1,9 @@
 // Classe pour construire les chemins empruntés par le joueur
+
 class Chemin {
   
-  PVector a; //Point A du mur (en haut à gauche)
-  PVector b; //Point B du mur (en bas à droite)
+  PVector a;  // Point A du mur (en haut à gauche)
+  PVector b;  // Point B du mur (en bas à droite)
   float alpha = 255.0;
   
   boolean disappear = false;

@@ -2,10 +2,12 @@
 
 class Labyrinthe {
   
-  ArrayList<Wall> walls = new ArrayList(); //Liste des murs du labyrinthe
-  ArrayList<Chemin> chemins = new ArrayList(); //Liste des chemins
+  ArrayList<Wall> walls = new ArrayList();  // Liste des murs du labyrinthe
+  ArrayList<Chemin> chemins = new ArrayList();  // Liste des chemins
+
+  boolean disappear = false;  // Permet de choisir si les murs du labyrinthe disparaissent ou non
   
-  boolean disappear = true; //Permet de choisir si les murs du labyrinthe disparaissent ou non
+  PVector startCase, endCase;
   
   Labyrinthe() {
     // Réinitialise les tableaux à 2 dimensions
@@ -13,7 +15,14 @@ class Labyrinthe {
     grille = new int[nbCase][nbCase];
     // Génère la matrice d'adjacence et construit les murs du labyrinthe
     creuse_passage(0, 0);
-    grille = new int[nbCase][nbCase]; //On remet à 0 la grille pour renseigner ensuite par où est passer le joueur
+    grille = new int[nbCase][nbCase];  // On remet à 0 la grille pour renseigner ensuite par où est passer le joueur
+    //startCase = new PVector(0, 0);
+    //endCase = new PVector(nbCase-1, nbCase-1);
+    startCase =  new PVector((int)random(nbCase),(int)random(nbCase));
+    endCase =  new PVector((int)random(nbCase),(int)random(nbCase));
+    while (endCase.x == startCase.x && endCase.y == startCase.y) {
+      endCase =  new PVector((int)random(nbCase),(int)random(nbCase));
+    }
     buildMaze();
   }
   
@@ -22,7 +31,7 @@ class Labyrinthe {
     
     fill(color(0,0,255));
     noStroke();
-    //Affichage des points/carrés de déplacements
+    // Affichage des points/carrés de déplacements
     if (player.point) {
       for (int i = 0; i < nbCase; i++) {
         for (int j = 0; j < nbCase; j++) {
@@ -34,13 +43,13 @@ class Labyrinthe {
       }
     }
     
-    //Cases Départ Vert et Arrivée Rouge
+    // Cases Départ Vert et Arrivée Rouge
     fill(color(0, 255, 0));
-    rect(0, 0, tailleX, tailleY);
+    rect(tailleX * startCase.x + tailleX/7, tailleY * startCase.y + tailleY/7, tailleX*5 /7, tailleY*5 /7);
     fill(color(255, 0, 0));
-    rect(tailleX * (nbCase-1), tailleY * (nbCase-1), tailleX, tailleY);
+    rect(tailleX * endCase.x + tailleX/7, tailleY * endCase.y + tailleY/7, tailleX*5 /7, tailleY*5 /7);
     
-    //Affichage des chemins empruntés par le joueur
+    // Affichage des chemins empruntés par le joueur
     if (player.chemin) {
       for (int i = 0; i < chemins.size(); i++) {
         Chemin chemin = chemins.get(i);
@@ -49,11 +58,11 @@ class Labyrinthe {
     }
     
     // Information sur la case départ du niveau du labyrinthe
-    fill(0);
+    fill(wallColor);
     textSize(tailleY / 2);
     text(niveau, tailleX/3, tailleY - tailleY/3);
     
-    //Affichage des murs
+    // Affichage des murs
     for (int i = 0; i < walls.size(); i++) {
       Wall wall = walls.get(i);
       wall.display();
@@ -61,7 +70,7 @@ class Labyrinthe {
     
     // Contour du terrain de jeu
     strokeWeight((width+height)/(nbCase*40));
-    stroke(0);
+    stroke(wallColor);
     line(0, 0, tailleX * nbCase, 0);
     line(0, 0, 0,  tailleY * nbCase);
     line(tailleX * nbCase, 0, tailleX * nbCase, tailleY * nbCase-1);
@@ -75,7 +84,7 @@ class Labyrinthe {
     }
   }
   
-  //Fonction récursive qui permet de creuser le labyrinthe
+  // Fonction récursive qui permet de creuser le labyrinthe
   void creuse_passage (int cx, int cy) {
     //println("Creuse Passage depuis " + cx + "," + cy);
     IntList directions = newDirectionList();
@@ -87,15 +96,15 @@ class Labyrinthe {
       int nx = cx + newX(direction);
       int ny = cy + newY(direction);
       
-      //Est-elle sur la grille (entre 0 et le nombre de case)
+      // Est-elle sur la grille (entre 0 et le nombre de case)
       if ((ny >= 0 && ny < nbCase) && (nx >= 0 && nx < nbCase)) {
-        //A-t-elle déjà été visité ?
+        // A-t-elle déjà été visité ?
         if (grille[nx][ny] == 0 ) {
           // Elle est accessible donc on mets à jour nos différentes matrices
-          grille[cx][cy] = direction; //Sur la cellule sur laquelle on se trouve, on met la direction où l'on va
-          grille[nx][ny] = opposite(direction); //Sur la cellule sur laquelle on va arriver, on met la direction opposé vers où l'on va
+          grille[cx][cy] = direction;  // Sur la cellule sur laquelle on se trouve, on met la direction où l'on va
+          grille[nx][ny] = opposite(direction);  // Sur la cellule sur laquelle on va arriver, on met la direction opposé vers où l'on va
           
-          //Et on ajoute des 1 dans la matrice d'adjacence pour que le joueur sache qu'il peut atteindre cette cellule à partir de celle-ci
+          // Et on ajoute des 1 dans la matrice d'adjacence pour que le joueur sache qu'il peut atteindre cette cellule à partir de celle-ci
           matrice[two2one(cx,cy)][two2one(nx,ny)] = 1;
           matrice[two2one(nx,ny)][two2one(cx,cy)] = 1;
           
@@ -103,14 +112,14 @@ class Labyrinthe {
           creuse_passage(nx, ny);
         }
       }
-    } //Et cela donc pour chaque direction
+    } // Et cela donc pour chaque direction
   }
 
-  //Crée une liste d'entier représentant les 4 directions et rangés dans le désordre
+  // Crée une liste d'entier représentant les 4 directions et rangés dans le désordre
   IntList newDirectionList() {
     IntList list = new IntList();
     for (int i = LEFT; i <= DOWN; i++) list.append(i);
-    list.shuffle(); //Mélange les nombres/directions
+    list.shuffle();  // Mélange les nombres/directions
     return list;
   }
   
@@ -142,7 +151,7 @@ class Labyrinthe {
     return coordonnee;
   }
   
-  //Retourne la direction opposé
+  // Retourne la direction opposé
   int opposite(int direction) {
     switch(direction) {
       case UP : return DOWN;
@@ -153,10 +162,10 @@ class Labyrinthe {
     }
   }
   
-  //Fonction qui construit le labyrinthe en créant des murs en bas et à droite de chaque case s'il y en besoin
+  // Fonction qui construit le labyrinthe en créant des murs en bas et à droite de chaque case s'il y en besoin
   void buildMaze() {
-    int ax,ay,bx,by; //Case A et B adjacente
-    //Parcours de toutes les cases du labyrinthe
+    int ax,ay,bx,by;  // Case A et B adjacente
+    // Parcours de toutes les cases du labyrinthe
     for (int i = 0; i < nbCase; i++) {
       for (int j = 0; j < nbCase; j++) {
         // Ya-t-il un passage à droite de cette case ?
@@ -176,6 +185,13 @@ class Labyrinthe {
           walls.add(new Wall(bx, by, ax, ay));
         }
       }
+    }
+  }
+  
+  // Vérifie si le joueur a atteint le point d'arrivée
+  void checkFinish() {
+    if (player.posOnGrid.x == endCase.x && player.posOnGrid.y == endCase.y) {
+      mode = LEVEL_UP;
     }
   }
   
