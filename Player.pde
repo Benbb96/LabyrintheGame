@@ -15,14 +15,8 @@ class Player {
   color couleur = color(255,255,0);  // La couleur du joueur, par défaut jaune
   
   Player () {
-    // Calcul de la taille du joueur
-    sizeX = tailleX/2;
-    sizeY = tailleY/2;
-    
     // Le joueur commence sur la première case en général en haut à gauche (0,0)
     posOnGrid = new PVector(labyrinthe.startCase.x,labyrinthe.startCase.y);
-    
-    // On met à jour sa position réel
     updateLocation();
   }
   
@@ -92,8 +86,8 @@ class Player {
     
     if (canGoThere) {
       if (grille[int(posOnGrid.y)][int(posOnGrid.x)] == 0) {
-        grille[int(posOnGrid.y)][int(posOnGrid.x)] = 1;
-        labyrinthe.chemins.add(new Chemin(oldPosOnGrid, new PVector(posOnGrid.x, posOnGrid.y)));
+        grille[int(posOnGrid.y)][int(posOnGrid.x)] = 1;  // Indique que le joueur est passé par cette case
+        labyrinthe.chemins.add(new Chemin(oldPosOnGrid, new PVector(posOnGrid.x, posOnGrid.y)));  // Ajoute le nouveau segment de chemin parcouru par le joueur
       }
     }
     
@@ -128,11 +122,11 @@ class Player {
     int targetY = int(y - posOnGrid.y);
     
     // Retourne la direction en fonction
-    if(targetX == 1) return RIGHT;
-    if(targetX == -1) return LEFT;
-    if(targetY == 1) return DOWN;
-    if(targetY == -1) return UP;
-    return 0;
+    if      (targetX == 1)  return RIGHT;
+    else if (targetX == -1) return LEFT;
+    else if (targetY == 1)  return DOWN;
+    else if (targetY == -1) return UP;
+    return 0;  // Le joueur ne bougera pas
   }
   
 }

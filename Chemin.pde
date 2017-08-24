@@ -13,9 +13,9 @@ class Chemin {
   
   void display() {
     // Calcul de la diminution de l'alpha (peut-être à adpater)
-    if (labyrinthe.disappear) alpha -= 1.2 / (nbCase / 2);
+    if (disappear) alpha -= 1.2 / (nbCase / 2);
     stroke(color(255,0,0), alpha);
-    strokeWeight((width+height)/(nbCase*80));
+    strokeWeight((width+height)/(nbCase*50));
     line(a.x * tailleX + tailleX/2, a.y * tailleY + tailleY/2, b.x * tailleX + tailleX/2, b.y * tailleY + tailleY/2);
   }
 }

@@ -13,7 +13,8 @@ class Wall {
   
   void display() {
     // Calcul de la diminution de l'alpha (peut-être à adpater)
-    if (labyrinthe.disappear) alpha -= 1.2 / (nbCase / 2);
+    if (disappear) alpha -= 1.2 / (nbCase / 2);
+    if (alpha < niveau * -10) state = GAME_OVER;  // Si tous le smurs ont disparu depuis un certain temps, le joueur a perdu
     stroke(wallColor, alpha);
     strokeWeight((width+height)/(nbCase*40));
     line(a.x * tailleX, a.y * tailleY, b.x * tailleX, b.y * tailleY);
