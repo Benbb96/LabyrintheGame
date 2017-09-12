@@ -18,10 +18,12 @@ J'ai également crée une petite musique de fond qui se répète en boucle (cela
 * Amélioration de l'IA -> Algorithme de Disjktra -> déplacement à un point random pour une impression de cohérence dans les mouvements.  
 L'IA pourrait faire un déplacement à chaque fois que le joueur se déplace (Pokemon Donjon Mystère)
 * Cases Abri pour se protéger des IA (dans les coins ?)
-* Ajout d'objets à collecter (Pouvoirs, score, ...)
-* Création d'un menu de jeu
+* Ajout d'objets à collecter (Pouvoirs, clefs, score, ...)
+* Création d'un menu de jeu -> Fait avec différents modes
 * Gestion des meilleurs scores dans un fichier -> Fait (à utiliser dans les futurs menus)
 * Ajout de différents sons
 * Etendre le labyrinthe de part et d'autre au lieu d'en générer un nouveau -> pas super car on repasse toujours par le même chemin
 * Faire disparaître les murs au bou d'un certain temps. Le joueur doit donc mémoriser l'emplacement des murs. Une touche spéciale pourrait permettre de revoir les murs pendant un court instant -> Fait, touche A pour faire réapparaître et touche D pour toogle ce mode
 * Mode 2 joueur : Splatoon, il faut recouvrir de sa couleur la plus grande partie du labyrinthe dans le temps imparti. A chaque fois que l'on passe sur une case, cela la recouvre de notre couleur.
+* Sauvegarder et charger un labyrinthe via un fichier (conserver la matrice d'adjacence)
+* Animer le labyrinthe pour que des murs se déplacent et modifie le labyrinthe sans qu'il ne devienne impossible à terminer

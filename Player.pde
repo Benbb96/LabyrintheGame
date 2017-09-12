@@ -2,15 +2,19 @@
 
 class Player {
  
-  PVector location;  // La position réel sur l'écran (en pixel)
-  PVector posOnGrid;  // La position du joueur sur la grille
-  float sizeX;  // La taille largeur du joueur
-  float sizeY;  // La taille hauteur du joueur
+  PVector
+    location,  // La position réel sur l'écran (en pixel)
+    posOnGrid;  // La position du joueur sur la grille
   
-  boolean overPlayer = false;  // Pour savoir si la souris est au-dessus du joueur
-  boolean isMoving = false;  // Lorsque le joueur est est en déplacement
-  boolean point = false;  // Affichage des points de marquage du chemin du joueur
-  boolean chemin = true;  // Affichage des chemins empruntés par le joueur
+  float
+    sizeX,  // La taille de la largeur du joueur
+    sizeY;  // La taille de la hauteur du joueur
+  
+  boolean
+    overPlayer = false,  // Pour savoir si la souris est au-dessus du joueur
+    isMoving   = false,  // Lorsque le joueur est est en déplacement
+    point      = false,  // Affichage des points de marquage du chemin du joueur
+    chemin     = true;  // Affichage des chemins empruntés par le joueur
   
   color couleur = color(255,255,0);  // La couleur du joueur, par défaut jaune
   
@@ -37,8 +41,10 @@ class Player {
     // Test si le curseur de la souris est au-dessus du joueur
     if (mouseX > location.x - sizeX/2 && mouseX < location.x + sizeX/2 && 
       mouseY > location.y - sizeY/2 && mouseY < location.y + sizeY/2) {
+      if (!isMoving) cursor(HAND);
       overPlayer = true;
     } else {
+      cursor(ARROW);
       overPlayer = false;
     }
     

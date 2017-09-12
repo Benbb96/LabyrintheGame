@@ -6,7 +6,7 @@ class Button {
   String text;  // Le texte du bouton
   int x, y;  // La position du texte
   int buttonMode;  // Le mode auquel donne accès le bouton
-  color fillColor, overColor;  // Les couleurs du bouton
+  color overColor;  // Les couleurs du bouton
   boolean selected = false;  // Indique si le bouton est actuellement sélectionné
   
   Button(int id, String text, int x, int y, int mode, color overColor) {
@@ -15,7 +15,6 @@ class Button {
     this.x = x;
     this.y = y;
     buttonMode = mode;
-    this.fillColor = wallColor;  // On reprend la couleur de démarquation
     this.overColor = overColor;
   }
   
@@ -28,11 +27,15 @@ class Button {
       selectedButton = id;
     }
     
-    if(selected) {
+    if (selected) {  // Si le bouton est sélectionné, on utilise sa couleur de survol et on grossit un peu la taille du texte
       fill(overColor);
+      stroke(overColor);
+      strokeWeight(2);
       textSize(width/19);
+      line(x - textWidth(text)/2 - 27, y + 3, x - textWidth(text)/2 - 8, y + 3);
+      line(x + textWidth(text)/2 + 27, y + 3, x + textWidth(text)/2 + 8, y + 3);
     } else {
-      fill(fillColor);
+      fill(wallColor);
       textSize(width/21);
     }
     textAlign(CENTER, CENTER);
@@ -45,16 +48,19 @@ class Button {
       case EASY :
         nbCaseDefaut = 2;
         incrementationDefaut = 1;
+        disappear = false;
         mode = EASY;
         break;
       case MEDIUM :
         nbCaseDefaut = 3;
         incrementationDefaut = 2;
+        disappear = false;
         mode = MEDIUM;
         break;
       case HARD :
         nbCaseDefaut = 4;
         incrementationDefaut = 3;
+        disappear = false;
         mode = HARD;
         break;
       case BLIND :
@@ -69,8 +75,11 @@ class Button {
   
   // Permet de déterminer si la souris estau-dessus du bouton ou non
   boolean mouseOver() {
-    if (mouseY > y-25 && mouseY < y+10 && mouseX < width/2) return true;
-    return false;
+    if (mouseY > y-25 && mouseY < y+10 && mouseX < width/2) {
+      return true;
+    } else {
+      return false;
+    }
   }
   
   // Fonction pour désélectionner tous les boutons

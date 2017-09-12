@@ -6,46 +6,58 @@
 
 // Instanciation des variables globales
 Player player;
-int niveau = 1;
-int delai = 0;
+int niveau = 1,
+    delai = 0;
 
 // Taille par défaut de la fenêtre
-final int DEFAULT_WIDTH = 444;
-final int DEFAULT_HEIGHT = 444;
+final int
+  DEFAULT_WIDTH = 444,
+  DEFAULT_HEIGHT = 444;
+
 // Valeurs de défaut du jeu pouvant être altérés par les différents modes
-int nbCaseDefaut;
-int incrementationDefaut;
+int nbCaseDefaut,
+    incrementationDefaut;
 
 int nbCase;  // Nombre de case actuel
-float tailleX;  // Taille largeur en pixel d'une case
-float tailleY;  // Taille hauteur en pixel d'une case
+float
+  tailleX,  // Taille largeur en pixel d'une case
+  tailleY;  // Taille hauteur en pixel d'une case
 
 Labyrinthe labyrinthe;  // Le labyrinthe du jeu
 int[][] matrice;  // Matrice d'adjacence du jeu pour savoir si on a le droit de se déplacer sur une case ou non
 int[][] grille;  // Grille qui va nous servir pour la construction du labyrinthe
 
-color backgroundColor = color(4);  // Couleur du fond de jeu
-color wallColor = color(244);  // Couleur des murs du labyrinthe
+color backgroundColor = color(4),  // Couleur du fond de jeu
+      wallColor = color(244);  // Couleur des murs du labyrinthe
 boolean disappear = false;  // Permet de choisir si les murs du labyrinthe disparaissent ou non
 
 // Les différents états du jeu
-final int MENU = 1;
-final int GAME = 4;
-final int LEVEL_UP = 44;
-final int GAME_OVER = 13;
-final int PAUSE = 10;
+final int
+  MENU = 1,
+  GAME = 4,
+  LEVEL_UP = 44,
+  GAME_OVER = 13,
+  PAUSE = 10;
 int state = MENU;  // La variable de l'état de jeu servant à déterminer quel écran afficher
 
 // Les différents modes de jeu
-final int EASY = 1;
-final int MEDIUM = 2;
-final int HARD = 3;
-final int BLIND = 4;
+final int
+  EASY = 1,
+  MEDIUM = 2,
+  HARD = 3,
+  BLIND = 4;
 int mode;  // La variable du mode de jeu pour définir les paramètres de jeu
 
 // Les boutons du menus
 Button[] buttons;
 int selectedButton;
+
+// Les sélecteurs de couleurs
+ColorPicker backgroundColorPicker, wallColorPicker;
+
+// Les lignes d'animations pour l'écran d'accueil
+MovingLine[] lines = new MovingLine[4];
+
 
 // ============================================================================================================================================
 
@@ -54,17 +66,29 @@ void settings() {
 }
 
 void setup() {
-  // Mise en place du terrain de jeu
+  backgroundColor = color(4);
+  
+  wallColor = color(244);
   background(backgroundColor);
   
   //Construction des boutons du menu
   buttons = new Button[4];  // Tableau des boutons
-  buttons[0] = new Button(0, "Easy", width/4, (height*6/10), EASY, color(0,255, 0));
-  buttons[1] = new Button(1, "Medium", width/4, (height*7/10), MEDIUM, color (255,165,0));
-  buttons[2] = new Button(2, "Hard", width/4, (height*8/10), HARD, color(255,0,0));
-  buttons[3] = new Button(3, "Blind", width/4, (height*9/10), BLIND, color(60,60,255));
+  buttons[0] = new Button(0, "Easy", width/4, (height*5/9), EASY, color(0,255, 0));
+  buttons[1] = new Button(1, "Medium", width/4, (height*6/9), MEDIUM, color (255,165,0));
+  buttons[2] = new Button(2, "Hard", width/4, (height*7/9), HARD, color(255,0,0));
+  buttons[3] = new Button(3, "Blind", width/4, (height*8/9), BLIND, color(60,60,255));
   buttons[1].selected = true;  // Le mode medium est sélectionné par défaut
   selectedButton = 1;
+  
+  // Construction des ColorPickers
+  backgroundColorPicker = new ColorPicker(20, 20, wallColor);
+  wallColorPicker = new ColorPicker(20, 60, backgroundColor);
+  
+  // Construction des Moving Lines avec leurs animations prédéfinis
+  lines[0] = new MovingLine(new PVector(0, 1), new PVector(1, 0), new IntList(4,0,4,6,4,4,3, 4,2,2,6,5,1,2, 2,0,2,5,2,2,1, 2,4,4,5,6,3,4));
+  lines[1] = new MovingLine(new PVector(2, 0), new PVector(0, 1), new IntList(4,2,2,6,5,1,2, 2,0,2,5,2,2,1, 2,4,4,5,6,3,4, 4,0,4,6,4,4,3));
+  lines[2] = new MovingLine(new PVector(1, 1), new PVector(0, 1), new IntList(3,0,4,4,5,2,0, 1,0,2,2,6,4,0));
+  lines[3] = new MovingLine(new PVector(1, 2), new PVector(1, 0), new IntList(4,5,1,6,3,5,1, 2,6,3,5,1,6,3));
 }
 
 void draw() {
@@ -77,11 +101,8 @@ void draw() {
       background(backgroundColor);
       fill(wallColor);
       textAlign(RIGHT);
-      textSize(width/17);
-      text("Le Labyrinthe Infini", width - 30, height/4);
-      textAlign(LEFT);
-      textSize(width/15);
-      text("Jouer", width/9, (height*5/10));
+      textSize(width/13);
+      text("Le Labyrinthe Infini", width - 30, height/3);
       
       drawAnimatedMaze();
             
@@ -89,6 +110,15 @@ void draw() {
       for (int i = 0; i < 4; i++) {
         buttons[i].display();
       }
+      
+      // Color Picker
+      fill(wallColor);
+      textAlign(LEFT);
+      textSize(12);
+      text("Couleur de fond", 50, 35);
+      text("Couleur des murs", 50, 75);
+      backgroundColorPicker.display();
+      wallColorPicker.display();
       break;
       
     case GAME :
@@ -107,19 +137,19 @@ void draw() {
     case LEVEL_UP :
       background(backgroundColor);
       displayGame(true);
-      popUp("Bravo !\nAppuiez sur Entrer\n Ou cliquez pour continuer");
+      popUp("Bravo !\nNiveau " + niveau + "\nAppuiez sur Entrée\n Ou cliquez pour continuer");
       break;
       
     case GAME_OVER :
       background(backgroundColor);
       displayGame(true);
-      popUp("Game Over !\nAppuiez sur Entrée\n Ou cliquez pour revenir au menu");
+      popUp("Game Over !\nNiveau " + niveau + "\nAppuiez sur Entrée\n Ou cliquez pour revenir au menu");
       break;
       
     case PAUSE :
       background(backgroundColor);
       displayGame(true);
-      popUp("Pause\nAppuiez sur Entrée\n Ou cliquez pour revenir au menu");
+      popUp("Pause\nNiveau " + niveau + "\nAppuiez sur Entrée\npour revenir au menu");
       break;
       
     default : background(255,0,0);
@@ -219,10 +249,27 @@ void keyPressed() {
 void mousePressed() {
   switch (state) {
     case MENU :
-    for (int i = 0; i < 4; i++) {
-        if (buttons[i].selected) {
-          buttons[i].chargeMode();
-          runGame();
+      // Clique pour ouvrir le color picker du fond
+      if (backgroundColorPicker.openColorPicker()) {
+        if (wallColorPicker.ShowColorPicker) {  // Si celui pour les murs est déjà ouvert, on le referme
+          wallColorPicker.ShowColorPicker = false;
+        } 
+        if (backgroundColorPicker.ShowColorPicker) backgroundColorPicker.ShowColorPicker = false;
+        else backgroundColorPicker.ShowColorPicker = true;
+      }
+      // Clique pour ouvrir le color picker des murs
+      else if (wallColorPicker.openColorPicker()) {
+        if (backgroundColorPicker.ShowColorPicker) {  //  Si celui pour le fond est déjà ouvert, on le referme
+          backgroundColorPicker.ShowColorPicker = false;
+        }
+        if (wallColorPicker.ShowColorPicker) wallColorPicker.ShowColorPicker = false;
+        else wallColorPicker.ShowColorPicker = true;
+      } else if (!backgroundColorPicker.ShowColorPicker && !wallColorPicker.ShowColorPicker) {
+        for (int i = 0; i < 4; i++) {
+          if (buttons[i].mouseOver()) {
+            buttons[i].chargeMode();
+            runGame();
+          }
         }
       }
       break;
@@ -236,7 +283,28 @@ void mousePressed() {
       break;
     case LEVEL_UP : levelUp(); break;
     case PAUSE :
+      if (mode == BLIND) {
+        disappear = true;  // On remet la disparition des murs
+      }
+      state = GAME;
+      break;
     case GAME_OVER : gameOver(); break;
+  }
+}
+
+// Fonction lors du relachement du clic de la souris
+void mouseReleased() {
+  backgroundColorPicker.isDraggingCross = false;
+  backgroundColorPicker.isDraggingLine = false;
+  wallColorPicker.isDraggingCross = false;
+  wallColorPicker.isDraggingLine = false;
+  
+  if (backgroundColorPicker.closeColorPicker()) {
+    backgroundColorPicker.ShowColorPicker = false;
+    backgroundColor = backgroundColorPicker.activeColor;
+  } else if (wallColorPicker.closeColorPicker()) {
+    wallColorPicker.ShowColorPicker = false;
+    wallColor = wallColorPicker.activeColor;
   }
 }
 
@@ -278,6 +346,12 @@ void gameOver() {
   surface.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
   surface.setResizable(false);  // Ne plus retoucher à la taille de l'écran
   
+  // Remise à 0 des Moving Lines
+  lines[0] = new MovingLine(new PVector(0, 1), new PVector(1, 0), new IntList(4,0,4,6,4,4,3, 4,2,2,6,5,1,2, 2,0,2,5,2,2,1, 2,4,4,5,6,3,4));
+  lines[1] = new MovingLine(new PVector(2, 0), new PVector(0, 1), new IntList(4,2,2,6,5,1,2, 2,0,2,5,2,2,1, 2,4,4,5,6,3,4, 4,0,4,6,4,4,3));
+  lines[2] = new MovingLine(new PVector(1, 1), new PVector(0, 1), new IntList(3,0,4,4,5,2,0, 1,0,2,2,6,4,0));
+  lines[3] = new MovingLine(new PVector(1, 2), new PVector(1, 0), new IntList(4,5,1,6,3,5,1, 2,6,3,5,1,6,3));
+  
   state = MENU; // On retourne au Menu si Game Over
 }
 
@@ -300,12 +374,11 @@ void drawAnimatedMaze() {
   pushMatrix();
   noFill();
   stroke(wallColor);
-  strokeWeight(3);
+  strokeWeight(4);
   translate(220,220);
   rect(0,0,180,180);
-  line(0,60,60,60);
-  line(60,60,60,120);
-  line(60,120,120,120);
-  line(120,0,120,60);
+  for (int i = 0; i < 4; i++) {
+    lines[i].show();
+  }
   popMatrix();
 }
