@@ -28,8 +28,6 @@ class MovingLine {
       setAnimation(getAnimation());
     }
     
-    pushMatrix();
-    
     switch (animation) {
       
       // Rotations dans le sens horaire
@@ -65,15 +63,11 @@ class MovingLine {
         animation = 0;
         ready = true;
     }
-    // On applique la nouvelle translation
-    translate(t.x * SIZE, t.y * SIZE);
     
-    // On applique la nouvelle rotation
-    rotate(r);
-    
-    // On dessine la ligne
-    line(a.x * SIZE , a.y * SIZE, b.x * SIZE, b.y * SIZE);
-    
+    pushMatrix();
+    translate(t.x * SIZE, t.y * SIZE);  // On applique la nouvelle translation
+    rotate(r);  // On applique la nouvelle rotation
+    line(a.x * SIZE , a.y * SIZE, b.x * SIZE, b.y * SIZE);  // On dessine la ligne
     popMatrix();
   }
   

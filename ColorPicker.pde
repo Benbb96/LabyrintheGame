@@ -34,8 +34,8 @@ class ColorPicker {
     
     colorMode(HSB);
     LineY = ColorPickerY + int(hue(activeColor));  // Positionne la ligne de teinte en fonction de l'active color
-    CrossX = ColorPickerX + int(saturation(activeColor));  // set initial Line position
-    CrossY = ColorPickerY + int(brightness(activeColor));  // set initial Line position
+    CrossX = ColorPickerX + int(saturation(activeColor));  // Positionne la croix en fonction de la saturation de l'active color
+    CrossY = ColorPickerY + int(brightness(activeColor));  // Positionne la croix en fonction de la luminosité de l'active color
     colorMode(RGB);
   }
   
@@ -79,10 +79,10 @@ class ColorPicker {
   
   
   void drawOK() {
-    if( mouseX > ColorPickerX + OkX && mouseX < ColorPickerX + OkX + 30 && mouseY > ColorPickerY + OkY && mouseY < ColorPickerY + OkY + 20 ) //check if the cross is on the darker color
-      fill(0);  // Optimise la visibilité sur les couleurs clairs
+    if( mouseX > ColorPickerX + OkX && mouseX < ColorPickerX + OkX + 30 && mouseY > ColorPickerY + OkY && mouseY < ColorPickerY + OkY + 20 )  // Vérifie si la souris est au-dessus du bouton OK
+      fill(0);  
     else
-      fill(100);  // Optimise la visibilité sur les couleurs sombres
+      fill(100);
     textSize(14);
     text( "OK" , ColorPickerX + 300 , ColorPickerY + 245 );
   }
@@ -107,9 +107,9 @@ class ColorPicker {
   
   void drawCross() {
     if( brightness( activeColor ) < 90 )
-      stroke( 255 );
+      stroke( 255 );  // Optimise la visibilité sur les couleurs sombres
     else
-      stroke( 0 );
+      stroke( 0 );  // Optimise la visibilité sur les couleurs clairs
       
     line( CrossX - 5 , CrossY , CrossX + 5 , CrossY );
     line( CrossX , CrossY - 5 , CrossX , CrossY + 5 );
