@@ -16,10 +16,15 @@ class Labyrinthe {
     // Génère la matrice d'adjacence et construit les murs du labyrinthe
     creuse_passage(0, 0);
     grille = new int[nbCase][nbCase];  // On remet à 0 la grille pour renseigner ensuite par où est passer le joueur
-    //startCase = new PVector(0, 0);
-    //endCase = new PVector(nbCase-1, nbCase-1);
-    startCase =  new PVector((int)random(nbCase),(int)random(nbCase));
-    endCase =  new PVector((int)random(nbCase),(int)random(nbCase));
+    
+    // En mode facile, la case de départ est en haut à gauche et celle d'arrivée est en bas à droite
+    if (mode == EASY) {
+      startCase = new PVector(0, 0);
+      endCase = new PVector(nbCase-1, nbCase-1);
+    } else {  // Dans les autres modes, ce sera random
+      startCase =  new PVector((int)random(nbCase),(int)random(nbCase));
+      endCase =  new PVector((int)random(nbCase),(int)random(nbCase));
+    }
     while (endCase.x == startCase.x && endCase.y == startCase.y) {
       endCase =  new PVector((int)random(nbCase),(int)random(nbCase));
     }
@@ -60,6 +65,7 @@ class Labyrinthe {
     // Information sur la case départ du niveau du labyrinthe
     fill(wallColor);
     textSize(tailleY / 2);
+    textAlign(LEFT);
     text(niveau, tailleX/3, tailleY - tailleY/3);
     
     // Affichage des murs
@@ -191,7 +197,11 @@ class Labyrinthe {
   // Vérifie si le joueur a atteint le point d'arrivée
   void checkFinish() {
     if (player.posOnGrid.x == endCase.x && player.posOnGrid.y == endCase.y) {
-      mode = LEVEL_UP;
+      player.isMoving = false;  // On stoppe le joueur pour ne plus qu'il puisse bouger à l'aide de la souris
+      if (mode == BLIND) {  // Dans ce mode on stoppe la disparition des murs
+        disappear = false;
+      }
+      state = LEVEL_UP;
     }
   }
   
