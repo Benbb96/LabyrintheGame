@@ -198,6 +198,7 @@ class Labyrinthe {
   void checkFinish() {
     if (player.posOnGrid.x == endCase.x && player.posOnGrid.y == endCase.y) {
       player.isMoving = false;  // On stoppe le joueur pour ne plus qu'il puisse bouger à l'aide de la souris
+      timer.end();
       if (mode == BLIND) {  // Dans ce mode on stoppe la disparition des murs
         disappear = false;
       }

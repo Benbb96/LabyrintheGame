@@ -128,10 +128,10 @@ class Player {
     int targetY = int(y - posOnGrid.y);
     
     // Retourne la direction en fonction
-    if      (targetX == 1)  return RIGHT;
-    else if (targetX == -1) return LEFT;
-    else if (targetY == 1)  return DOWN;
-    else if (targetY == -1) return UP;
+    if (targetX > abs(targetY)) return RIGHT;
+    if (targetX < abs(targetY)) return LEFT;
+    if (targetY > abs(targetX)) return DOWN;
+    if (targetY < abs(targetX)) return UP;
     return 0;  // Le joueur ne bougera pas
   }
   

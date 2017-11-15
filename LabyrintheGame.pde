@@ -24,7 +24,7 @@ float
   tailleY;  // Taille hauteur en pixel d'une case
 
 Labyrinthe labyrinthe;  // Le labyrinthe du jeu
-int[][] matrice;  // Matrice d'adjacence du jeu pour savoir si on a le droit de se déplacer sur une case ou non
+int[][] matrice;  // Matrice d'adjacence du jeu pour savoir si on a le droit de se déplacer d'une case à l'autre ou non
 int[][] grille;  // Grille qui va nous servir pour la construction du labyrinthe
 
 color backgroundColor = color(4),  // Couleur du fond de jeu
@@ -58,6 +58,8 @@ ColorPicker backgroundColorPicker, wallColorPicker;
 // Les lignes d'animations pour l'écran d'accueil
 MovingLine[] lines = new MovingLine[4];
 
+// Le timer qui sera utilisé pour chronométrer le temps passé dans un labyrinthe
+Timer timer;
 
 // ============================================================================================================================================
 
@@ -131,13 +133,13 @@ void draw() {
         delay(delai);
       }
       
-      displayGame(false);  // On affiche le jeu et on empêche pas le joueur de bouger
+      displayGame(false);  // On affiche le jeu et on n'empêche pas le joueur de bouger
       break;
       
     case LEVEL_UP :
       background(backgroundColor);
       displayGame(true);
-      popUp("Bravo !\nNiveau " + niveau + "\nAppuiez sur Entrée\n Ou cliquez pour continuer");
+      popUp("Bravo !\nNiveau " + niveau + "\nTemps : " + timer.getDisplay() + "\nAppuiez sur Entrée\n Ou cliquez pour continuer");
       break;
       
     case GAME_OVER :
@@ -149,7 +151,7 @@ void draw() {
     case PAUSE :
       background(backgroundColor);
       displayGame(true);
-      popUp("Pause\nNiveau " + niveau + "\nAppuiez sur Entrée\npour revenir au menu");
+      popUp("Pause\nNiveau " + niveau + "\nTemps : " + timer.getDisplay() + "\nAppuiez sur Entrée\npour revenir au menu");
       break;
       
     default : background(255,0,0);
@@ -214,6 +216,7 @@ void keyPressed() {
         case ESC :
           // La touche Echap permet de mettre le jeu en pause
           key = 0;  // Empêche le jeu de se fermer
+          timer.pause();  // On met le timer en pause
           if (mode == BLIND) {  // Dans ce mode on stoppe la disparition des murs
             disappear = false;
           }
@@ -237,8 +240,9 @@ void keyPressed() {
       } else if (key == ESC) {
         key = 0;
         if (mode == BLIND) {
-            disappear = true;  // On remet la disparition des murs
-          }
+          disappear = true;  // On remet la disparition des murs
+        }
+        timer.restart();  // On relance le timer
         state = GAME;
       }
       break;
@@ -286,6 +290,7 @@ void mousePressed() {
       if (mode == BLIND) {
         disappear = true;  // On remet la disparition des murs
       }
+      timer.restart();  // On relance le timer
       state = GAME;
       break;
     case GAME_OVER : gameOver(); break;
@@ -321,6 +326,8 @@ void runGame() {
   
   state = GAME;  // On passe à l'état de Jeu
   surface.setResizable(true);  // Et on permet de redimmensionner la fenêtre
+  
+  timer = new Timer(); // Enfin, on instancie et démarre le timer
 }
 
 // Fonction qui fait passer le jeu au niveau supérieur
@@ -337,6 +344,7 @@ void levelUp() {
   if (mode == BLIND) {  // On remet la disparition des murs
     disappear = true;
   }
+  timer = new Timer();  // On crée un nouveau timer pour ce nouveau niveau
   state = GAME;
 }
 
