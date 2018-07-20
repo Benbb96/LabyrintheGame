@@ -67,6 +67,14 @@ void settings() {
   size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 }
 
+void resetMovingLines() {
+  // Construction des Moving Lines avec leurs animations prédéfinis
+  lines[0] = new MovingLine(new PVector(0, 1), new PVector(1, 0), new IntList(4,0,4,6,4,4,3, 4,2,2,6,5,1,2, 2,0,2,5,2,2,1, 2,4,4,5,6,3,4));
+  lines[1] = new MovingLine(new PVector(2, 0), new PVector(0, 1), new IntList(4,2,2,6,5,1,2, 2,0,2,5,2,2,1, 2,4,4,5,6,3,4, 4,0,4,6,4,4,3));
+  lines[2] = new MovingLine(new PVector(1, 1), new PVector(0, 1), new IntList(3,0,4,4,5,2,0, 1,0,2,2,6,4,0));
+  lines[3] = new MovingLine(new PVector(1, 2), new PVector(1, 0), new IntList(4,5,1,6,3,5,1, 2,6,3,5,1,6,3));
+}
+
 void setup() {
   backgroundColor = color(4);
   
@@ -86,11 +94,7 @@ void setup() {
   backgroundColorPicker = new ColorPicker(20, 20, wallColor);
   wallColorPicker = new ColorPicker(20, 60, backgroundColor);
   
-  // Construction des Moving Lines avec leurs animations prédéfinis
-  lines[0] = new MovingLine(new PVector(0, 1), new PVector(1, 0), new IntList(4,0,4,6,4,4,3, 4,2,2,6,5,1,2, 2,0,2,5,2,2,1, 2,4,4,5,6,3,4));
-  lines[1] = new MovingLine(new PVector(2, 0), new PVector(0, 1), new IntList(4,2,2,6,5,1,2, 2,0,2,5,2,2,1, 2,4,4,5,6,3,4, 4,0,4,6,4,4,3));
-  lines[2] = new MovingLine(new PVector(1, 1), new PVector(0, 1), new IntList(3,0,4,4,5,2,0, 1,0,2,2,6,4,0));
-  lines[3] = new MovingLine(new PVector(1, 2), new PVector(1, 0), new IntList(4,5,1,6,3,5,1, 2,6,3,5,1,6,3));
+  resetMovingLines();
 }
 
 void draw() {
@@ -355,10 +359,7 @@ void gameOver() {
   surface.setResizable(false);  // Ne plus retoucher à la taille de l'écran
   
   // Remise à 0 des Moving Lines
-  lines[0] = new MovingLine(new PVector(0, 1), new PVector(1, 0), new IntList(4,0,4,6,4,4,3, 4,2,2,6,5,1,2, 2,0,2,5,2,2,1, 2,4,4,5,6,3,4));
-  lines[1] = new MovingLine(new PVector(2, 0), new PVector(0, 1), new IntList(4,2,2,6,5,1,2, 2,0,2,5,2,2,1, 2,4,4,5,6,3,4, 4,0,4,6,4,4,3));
-  lines[2] = new MovingLine(new PVector(1, 1), new PVector(0, 1), new IntList(3,0,4,4,5,2,0, 1,0,2,2,6,4,0));
-  lines[3] = new MovingLine(new PVector(1, 2), new PVector(1, 0), new IntList(4,5,1,6,3,5,1, 2,6,3,5,1,6,3));
+  resetMovingLines();
   
   state = MENU; // On retourne au Menu si Game Over
 }
