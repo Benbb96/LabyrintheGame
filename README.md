@@ -1,5 +1,6 @@
 ﻿# Labyrinthe Game
 
+[README en anglais](README-EN.md)
 *Jeu de labyrinthe généré aléatoirement, créé et développé par Benjamin Bernard-Bouissières à l'aide du logiciel __[Processing](https://processing.org/)__*
 
 ## Présentation du jeu
