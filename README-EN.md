@@ -23,4 +23,4 @@ The AI could make a move each time the player moves (Pokemon Dungeon Mystery)
 * Management of the best scores in a file -> Done (to be used in future menus)
 * Adding different sounds
 * Extend the labyrinth on both sides instead of generating a new one -> not great because we always go back by the same way
-* Make the walls disappear at a certain time. The player must memorize the location of the walls. A special touch could make it possible to review the walls for a short time -> Fact, key A
+* Make the walls disappear at a certain time. The player must memorize the location of the walls. A special touch could make it possible to review the walls for a short time -> Done, key A
